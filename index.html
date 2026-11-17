@@ -2,103 +2,394 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DYU 챔피언십 안내</title>
+<meta name="theme-color" content="#0a1d4d">
 <meta property="og:title" content="DYU 챔피언십 안내">
 <meta property="og:description" content="12:40 청라 홈플러스 마트 앞 식당 집결">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23ffd166'/%3E%3Cpath d='M16 6l3 7 7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L6 13.5l7-.5z' fill='%230a1d4d'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#061233;font-family:'Noto Sans KR',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:#ffd166;text-decoration:none}a:hover{color:#fff}
+:root{
+  --navy-0:#040c26;--navy-1:#061233;--navy-2:#0a1d4d;--navy-3:#0f2a6b;--navy-4:#1b3b8a;
+  --gold:#ffd166;--gold-d:#b8902e;--orange:#ff8c42;--ink:#eaf2ff;--ink-2:#c9d8f5;--ink-3:#9fb3dd;
+  --paper:#f4e8c8;--paper-ink:#3a2a10;--paper-ink-2:#6b5330;--paper-line:#8a6d3b;
+  --mint:#7ff5d6;--sky:#5fd0ff;--violet:#a58bff;--red:#ff5d6c;
+  --card:rgba(255,255,255,.07);--card-line:rgba(255,255,255,.14);
+  --jua:'Jua',sans-serif;--sans:'Noto Sans KR',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:16px}
+body{margin:0;background:var(--navy-1);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
 @keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes pop{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%)}}
 @keyframes popIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
 @keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-@keyframes bob{0%,100%{transform:translate(-50%,-100%)}50%{transform:translate(-50%,-125%)}}
-@keyframes ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+@keyframes bob{0%,100%{transform:translate(-50%,-100%)}50%{transform:translate(-50%,-122%)}}
+@keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.9);opacity:0}}
 @keyframes dash{to{stroke-dashoffset:-32}}
-@keyframes wave{0%,100%{transform:translateX(0)}50%{transform:translateX(-20px)}}
+@keyframes drift{0%,100%{transform:translateX(0)}50%{transform:translateX(-22px)}}
+@keyframes sail{0%,100%{transform:translate(0,0) rotate(-2deg)}50%{transform:translate(6px,-4px) rotate(2deg)}}
+@keyframes glow{0%,100%{opacity:.55}50%{opacity:.9}}
+@keyframes shine{0%,100%{opacity:0}50%{opacity:1}}
+
+.world{min-height:100vh;background:linear-gradient(180deg,var(--navy-3) 0%,var(--navy-2) 22%,var(--navy-1) 60%,var(--navy-0) 100%);position:relative;overflow:hidden}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.08;mix-blend-mode:overlay}
+.wrap{position:relative;max-width:720px;margin:0 auto;padding:0 20px}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle ease infinite}
+
+/* hero */
+.hero{position:relative;text-align:center;padding:clamp(56px,10vw,96px) 0 0}
+.moon{position:absolute;right:-6px;top:28px;width:clamp(70px,16vw,110px);animation:glow 5s ease-in-out infinite}
+.eyebrow{font:400 clamp(13px,2.4vw,16px)/1 var(--jua);letter-spacing:.25em;color:var(--gold)}
+.ribbon{display:inline-flex;align-items:center;gap:10px}
+.ribbon::before,.ribbon::after{content:"";width:28px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.ribbon::after{transform:scaleX(-1)}
+h1{font:400 clamp(46px,12vw,92px)/1.05 var(--jua);color:#fff;margin:14px 0 0;text-shadow:0 4px 0 var(--navy-4),0 8px 0 rgba(0,0,0,.25),0 0 40px rgba(79,163,255,.75);animation:popIn .9s ease .1s both;text-wrap:balance}
+.lead{font:400 clamp(14px,2.6vw,16px)/1.8 var(--sans);color:var(--ink-2);margin:16px auto 0;max-width:420px;animation:up .9s ease .3s both}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px;animation:up .9s ease .45s both}
+.chip{font:500 13px/1 var(--sans);padding:11px 16px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25)}
+.chip.gold{background:var(--gold);color:#3a2a00;font:400 14px/1 var(--jua);border:0;box-shadow:0 4px 0 var(--gold-d)}
+.status{margin-top:26px;display:inline-flex;align-items:center;gap:8px;font:500 12px/1.4 var(--sans);color:var(--ink-3);letter-spacing:.12em;animation:up .9s ease .6s both;background:rgba(4,12,38,.5);border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:99px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange);animation:twinkle 1.4s ease infinite;flex:none}
+.seascape{display:block;width:calc(100% + 40px);margin:18px -20px 0;height:auto;-webkit-mask-image:linear-gradient(#000 75%,transparent);mask-image:linear-gradient(#000 75%,transparent)}
+.ship{animation:sail 5s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.waveA{animation:drift 9s ease-in-out infinite}.waveB{animation:drift 12s ease-in-out -4s infinite}
+
+/* section heads */
+.sec{padding:clamp(48px,8vw,72px) 0 0}
+.sec-head{text-align:center}
+.sec-head .eyebrow{font-size:14px}
+.sec-head h2{font:400 clamp(28px,6vw,38px)/1.2 var(--jua);color:#fff;margin:8px 0 0;text-wrap:balance}
+.sec-head .ill{display:block;margin:0 auto 10px;width:clamp(84px,20vw,120px);height:auto}
+
+/* map */
+.map{position:relative;max-width:560px;margin:28px auto 0}
+.map svg.route{display:block;overflow:visible}
+.node{position:absolute;transform:translate(-50%,-50%);animation:pop .6s ease both}
+.island{position:relative;width:clamp(74px,19vw,100px);display:block}
+.island svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.island .ring{position:absolute;left:8%;right:8%;top:30%;bottom:6%;border-radius:50%;border:2px solid var(--orange);animation:ring 1.8s ease-out infinite}
+.lv{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font:400 10px/1 var(--jua);letter-spacing:.08em;background:var(--navy-1);border:1px solid rgba(255,255,255,.2);color:var(--ink-2);padding:3px 6px;border-radius:99px;white-space:nowrap}
+.lv.hi{background:var(--gold);color:#2a1200;border-color:var(--gold-d)}
+.lv.cur{background:var(--orange);color:#2a1200;border-color:#c25c1c}
+.label{position:absolute;transform:translateY(-50%);animation:up .6s ease both}
+.label .t{font:400 clamp(11px,2.4vw,13px)/1 var(--jua);letter-spacing:.06em;color:var(--gold)}
+.label .n{font:700 clamp(13px,3vw,16px)/1.4 var(--sans);color:#fff;margin-top:5px;text-shadow:0 2px 8px rgba(0,0,0,.6);word-break:keep-all}
+.pin{position:absolute;animation:bob 1.6s ease-in-out infinite;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;pointer-events:none}
+.pin b{width:26px;height:26px;background:var(--orange);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 0 20px var(--orange);border:3px solid #ffd9bd}
+.pin span{background:var(--orange);color:#2a1200;font:400 11px/1 var(--jua);letter-spacing:.1em;padding:6px 10px;border-radius:6px;white-space:nowrap}
+
+/* parchment */
+.parchment{position:relative;margin:56px 0 0;background:var(--paper);color:var(--paper-ink);padding:clamp(28px,5vw,36px) clamp(18px,4vw,28px);transform:rotate(-1deg);filter:drop-shadow(0 20px 30px rgba(0,0,0,.5));border-radius:4px;background-image:radial-gradient(ellipse at 20% 10%,rgba(255,255,255,.5),transparent 50%),radial-gradient(ellipse at 90% 90%,rgba(160,110,40,.25),transparent 60%),repeating-linear-gradient(0deg,rgba(138,109,59,.06) 0 1px,transparent 1px 26px)}
+.parchment::before,.parchment::after{content:"";position:absolute;left:0;right:0;height:10px;background:radial-gradient(circle at 10px 10px,var(--paper) 9px,transparent 9.5px) 0 0/20px 10px repeat-x}
+.parchment::before{top:-9px;transform:scaleY(-1)}
+.parchment::after{bottom:-9px}
+.parchment h3{font:400 clamp(18px,3.6vw,22px)/1.3 var(--jua);text-align:center;margin:0;text-wrap:balance}
+.parchment .seal{position:absolute;right:10px;top:-30px;width:54px;height:54px}
+.teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:18px}
+.team{border:2px dashed var(--paper-line);border-radius:8px;padding:14px 12px 16px;text-align:center;background:rgba(255,255,255,.25)}
+.team svg{width:44px;height:44px;display:block;margin:0 auto 4px}
+.team .id{font:400 30px/1 var(--jua)}
+.team .nm{font:700 14px/1.4 var(--sans);margin:8px 0 4px}
+.team .it{font:400 12px/1.7 var(--sans);color:var(--paper-ink-2)}
+
+/* rules */
+.rules{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.rule{display:grid;grid-template-columns:56px 1fr;gap:14px;background:var(--card);border-radius:14px;padding:16px;border:1px solid var(--card-line)}
+.rule .no{width:52px;height:52px;border-radius:14px;box-shadow:0 5px 0 rgba(0,0,0,.35),inset 0 2px 0 rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font:400 24px/1 var(--jua);color:#1a1200}
+.rule .tt{font:700 15px/1.4 var(--sans);color:#fff;margin:4px 0 6px}
+.rule .ln{font:400 13px/1.7 var(--sans);color:var(--ink-2);word-break:keep-all}
+.stats{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:var(--card);border:1px solid var(--card-line);border-radius:14px;padding:16px;text-align:center}
+.stat .k{font:400 11px/1 var(--jua);letter-spacing:.2em;color:var(--ink-3)}
+.stat .v{font:400 26px/1 var(--jua);color:#fff;margin-top:8px}
+.stat.gold{background:var(--gold);border:0;box-shadow:0 5px 0 var(--gold-d)}
+.stat.gold .k{color:var(--paper-ink-2)}.stat.gold .v{color:#2a1200}
+
+/* scoreboard */
+.board{margin-top:24px;display:flex;flex-direction:column;gap:14px}
+.panel{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.05));border:1px solid var(--card-line);border-radius:18px;padding:18px}
+.panel h4{display:flex;align-items:center;gap:10px;margin:0 0 14px;font:400 18px/1.2 var(--jua);color:#fff}
+.panel h4 small{font:400 12px/1 var(--sans);color:var(--ink-3);margin-left:auto}
+.step{width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:400 14px/1 var(--jua);color:#1a1200;flex:none}
+.addrow{display:flex;gap:8px}
+.input{flex:1;min-width:0;background:rgba(4,12,38,.6);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:11px 12px;font-size:15px;outline:none}
+.input:focus{border-color:var(--gold)}
+.btn{border:0;border-radius:10px;padding:11px 14px;font:400 15px/1 var(--jua);cursor:pointer;background:var(--gold);color:#2a1200;box-shadow:0 3px 0 var(--gold-d);white-space:nowrap}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--gold-d)}
+.btn.ghost{background:rgba(255,255,255,.1);color:var(--ink);box-shadow:none;border:1px solid rgba(255,255,255,.2)}
+.btn.danger{background:transparent;color:#ff9aa4;box-shadow:none;border:1px solid rgba(255,93,108,.4)}
+.hint{font:400 12px/1.6 var(--sans);color:var(--ink-3);margin:10px 0 0}
+.players{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pchip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:6px 6px 6px 12px;font:500 14px/1 var(--sans)}
+.pchip button{width:22px;height:22px;border-radius:50%;border:0;background:rgba(255,255,255,.12);cursor:pointer;line-height:1;padding:0}
+.toggles{display:flex;flex-wrap:wrap;gap:8px}
+.tg{border-radius:99px;padding:9px 14px;border:1px solid rgba(255,255,255,.2);background:rgba(4,12,38,.5);font:500 14px/1 var(--sans);cursor:pointer}
+.tg[aria-pressed="true"]{background:var(--mint);color:#06281f;border-color:var(--mint)}
+.rounds{display:grid;gap:10px}
+.round{display:grid;grid-template-columns:44px repeat(3,1fr);gap:6px;align-items:center}
+.round .rn{font:400 15px/1 var(--jua);color:var(--sky)}
+.round select{width:100%;min-width:0;appearance:none;-webkit-appearance:none;background:rgba(4,12,38,.6);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:10px 8px;font-size:14px;outline:none;text-overflow:ellipsis}
+.round select.set{border-color:var(--sky)}
+.round .hd{font:400 11px/1 var(--jua);letter-spacing:.1em;color:var(--ink-3);text-align:center}
+.tbl{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;background:rgba(4,12,38,.45);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px}
+.row .rk{font:400 18px/1 var(--jua);text-align:center;color:var(--ink-3)}
+.row .who{font:700 15px/1.3 var(--sans);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .sub{font:400 11px/1.5 var(--sans);color:var(--ink-3);white-space:normal}
+.tickets{display:inline-flex;align-items:center;gap:4px;font:400 20px/1 var(--jua);color:var(--gold)}
+.tickets svg{width:18px;height:18px}
+.amt{width:120px;text-align:right}
+.row.r1{border-color:rgba(255,209,102,.6);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(4,12,38,.45))}
+.row.r1 .rk{color:var(--gold)}.row.r2 .rk{color:#d9e3f5}.row.r3 .rk{color:#e3a36b}
+.row.out{opacity:.75}
+.row.out .who{text-decoration:line-through;text-decoration-color:var(--red)}
+.tag{font:400 11px/1 var(--jua);letter-spacing:.05em;padding:4px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.tag.out{background:rgba(255,93,108,.2);color:#ff9aa4}
+.tag.win{background:rgba(127,245,214,.18);color:var(--mint)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:4px}
+.empty{font:400 13px/1.6 var(--sans);color:var(--ink-3);text-align:center;padding:10px 0}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#fff;color:#0a1d4d;font:700 14px/1 var(--sans);padding:12px 16px;border-radius:10px;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+/* bottom nav */
+.nav{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:4px;padding:5px;background:rgba(4,12,38,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.15);border-radius:99px;z-index:40;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.nav a{font:400 14px/1 var(--jua);color:var(--ink-2);text-decoration:none;padding:10px 14px;border-radius:99px;white-space:nowrap}
+.nav a.on{background:var(--gold);color:#2a1200}
+
+footer{padding:clamp(56px,10vw,88px) 0 120px;text-align:center}
+footer .big{font:400 clamp(22px,5vw,30px)/1.3 var(--jua);color:#fff;text-wrap:balance}
+footer .small{font:400 13px/1.7 var(--sans);color:var(--ink-3);margin-top:12px}
+footer svg{width:64px;height:auto;margin-bottom:12px}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div style="min-height:100vh;background:linear-gradient(180deg,#0f2a6b 0%,#0a1d4d 28%,#061233 70%,#040c26 100%);color:#eaf2ff;position:relative;overflow:hidden">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- tiny line icons used on the map islands -->
+    <symbol id="i-meal" viewBox="0 0 24 24"><path d="M3 12h18a9 9 0 0 1-18 0z"/><path d="M9 8c0-1.6 1.5-1.6 1.5-3.2M13 8c0-1.6 1.5-1.6 1.5-3.2"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M2 4h3l2.4 11h11l2-8H6"/><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></symbol>
+    <symbol id="i-van" viewBox="0 0 24 24"><path d="M2 16V7a1 1 0 0 1 1-1h11l4 4h3v6"/><path d="M2 16h20M14 6v4h4"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10M10 20v-5h4v5"/></symbol>
+    <symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18M3.5 9h17M3.5 15h17"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/></symbol>
+    <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2c3.5 4 6 6.5 6 11a6 6 0 0 1-12 0c0-2.5 1.2-4 2.5-5 0 2 1 3.5 2.5 3.5 0-3.5-1.5-6 1-9.5z"/><path d="M4 21h16"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></symbol>
+    <symbol id="i-pad" viewBox="0 0 24 24"><path d="M7 7h10a5 5 0 0 1 4.8 6.4l-1 3.4a2.5 2.5 0 0 1-4.3.9L14.5 15h-5l-2 2.7a2.5 2.5 0 0 1-4.3-.9l-1-3.4A5 5 0 0 1 7 7z"/><path d="M8 10v3M6.5 11.5h3"/><circle cx="16" cy="10.5" r=".6"/><circle cx="17.5" cy="12.5" r=".6"/></symbol>
+    <symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17M8 3.5c0 1.5 1 1.5 1 3M12 3.5c0 1.5 1 1.5 1 3"/></symbol>
+    <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 12h2M9.5 11v2M13.5 12h2M8.5 16.5l2 0M13.5 15.5l2 2M15.5 15.5l-2 2"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></symbol>
+    <symbol id="i-beer" viewBox="0 0 24 24"><path d="M5 8h10v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M15 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2M5 8a2.5 2.5 0 0 1 2.5-4 3 3 0 0 1 5 0A2.5 2.5 0 0 1 15 8"/><path d="M8.5 12v5M11.5 12v5"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 0 2-2h14a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H5a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z" fill="currentColor" stroke="none"/><path d="M9 6v12" stroke="#0a1d4d" stroke-dasharray="1.5 2"/></symbol>
+  </defs>
+</svg>
+<svg class="grain" aria-hidden="true"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg>
+
+<div class="world">
   <div id="stars"></div>
-  <div style="position:absolute;left:-10%;top:340px;width:45%;height:110px;background:#071a45;border-radius:50% 50% 0 0;opacity:.9;animation:wave 9s ease-in-out infinite"></div>
-  <div style="position:absolute;right:-12%;top:300px;width:55%;height:150px;background:#061538;border-radius:50% 50% 0 0;opacity:.9;animation:wave 11s ease-in-out -4s infinite"></div>
 
-  <div style="position:relative;max-width:720px;margin:0 auto;padding:0 20px">
-
-    <header style="padding:clamp(56px,10vw,96px) 0 24px;text-align:center">
-      <div style="font:400 clamp(13px,2.4vw,16px)/1 'Jua',sans-serif;letter-spacing:.25em;color:#ffd166;animation:up .8s ease both">THE ADVENTURE MAP</div>
-      <h1 style="font:400 clamp(44px,11vw,88px)/1.05 'Jua',sans-serif;color:#fff;margin:14px 0 0;text-shadow:0 4px 0 #1b3b8a,0 0 34px rgba(79,163,255,.8);animation:popIn .9s ease .1s both;text-wrap:balance">DYU 챔피언십</h1>
-      <p style="font:400 clamp(14px,2.6vw,16px)/1.8 'Noto Sans KR',sans-serif;color:#c9d8f5;margin:16px auto 0;max-width:420px;animation:up .9s ease .3s both">당일 늦지 않게 12시 40분 마트 앞 식당으로 집결</p>
-      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px;animation:up .9s ease .45s both">
-        <div style="background:#ffd166;color:#3a2a00;font:400 14px/1 'Jua',sans-serif;padding:11px 16px;border-radius:8px;box-shadow:0 4px 0 #b8902e">집결 12:40</div>
-        <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);font:500 13px/1 'Noto Sans KR',sans-serif;padding:11px 16px;border-radius:8px">청라 홈플러스 · 마트 앞 식당</div>
+  <div class="wrap">
+    <header class="hero" id="top">
+      <svg class="moon" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><radialGradient id="moonG" cx="40%" cy="35%"><stop offset="0" stop-color="#fff8dc"/><stop offset="1" stop-color="#ffd98a"/></radialGradient>
+        <radialGradient id="moonHalo"><stop offset=".45" stop-color="#ffe8a8" stop-opacity=".35"/><stop offset="1" stop-color="#ffe8a8" stop-opacity="0"/></radialGradient></defs>
+        <circle cx="50" cy="50" r="50" fill="url(#moonHalo)"/>
+        <circle cx="50" cy="50" r="26" fill="url(#moonG)"/>
+        <circle cx="41" cy="44" r="4.5" fill="#f1c56d" opacity=".55"/><circle cx="57" cy="58" r="6" fill="#f1c56d" opacity=".45"/><circle cx="59" cy="40" r="2.6" fill="#f1c56d" opacity=".5"/>
+      </svg>
+      <div class="eyebrow ribbon" style="animation:up .8s ease both">THE ADVENTURE MAP</div>
+      <h1>DYU 챔피언십</h1>
+      <p class="lead">당일 늦지 않게 12시 40분 마트 앞 식당으로 집결</p>
+      <div class="chips">
+        <div class="chip gold">집결 12:40</div>
+        <div class="chip">청라 홈플러스 · 마트 앞 식당</div>
       </div>
-      <div style="margin-top:28px;display:inline-flex;align-items:center;gap:8px;font:500 12px/1 'Noto Sans KR',sans-serif;color:#9fb3dd;letter-spacing:.15em;animation:up .9s ease .6s both"><span style="width:8px;height:8px;border-radius:50%;background:#ff8c42;box-shadow:0 0 10px #ff8c42;animation:twinkle 1.4s ease infinite"></span><span id="status"></span></div>
+      <div class="status"><i></i><span id="status"></span></div>
+
+      <!-- seascape: distant islands, a little ship, layered waves -->
+      <svg class="seascape" viewBox="0 0 760 210" aria-hidden="true">
+        <defs>
+          <linearGradient id="sea1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16408f"/><stop offset="1" stop-color="#0a1d4d"/></linearGradient>
+          <linearGradient id="sea2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2a6a"/><stop offset="1" stop-color="#061233"/></linearGradient>
+          <linearGradient id="moonPath" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe8a8" stop-opacity=".5"/><stop offset="1" stop-color="#ffe8a8" stop-opacity="0"/></linearGradient>
+        </defs>
+        <!-- far islands -->
+        <path d="M0 118 C60 92 110 90 160 112 C200 96 240 98 270 116 L270 130 L0 130Z" fill="#173a85"/>
+        <path d="M470 120 C520 80 580 76 640 104 C680 90 730 92 760 108 L760 130 L470 130Z" fill="#173a85"/>
+        <!-- lighthouse -->
+        <g transform="translate(600 58)">
+          <path d="M-6 44 L-4 6 L4 6 L6 44Z" fill="#e9eef8"/><path d="M-5 18h10v6h-10zM-5.6 32h11.2v6h-11.2z" fill="#ff5d6c"/>
+          <rect x="-6" y="0" width="12" height="7" rx="2" fill="#ffd166"/><path d="M-4 0 L0 -6 L4 0Z" fill="#e9eef8"/>
+          <path d="M6 3 L90 -14 L90 18Z" fill="#ffd166" opacity=".14" style="animation:shine 4s ease-in-out infinite"/>
+        </g>
+        <!-- palms on left island -->
+        <g fill="none" stroke="#173a85" stroke-width="3" stroke-linecap="round">
+          <path d="M120 100 C118 84 122 72 128 62"/><path d="M128 62 C116 56 104 60 98 66M128 62 C138 52 150 54 156 60M128 62 C126 50 132 44 140 42M128 62 C120 52 112 50 106 52"/>
+        </g>
+        <!-- moon reflection -->
+        <rect x="640" y="126" width="34" height="84" fill="url(#moonPath)" rx="17"/>
+        <g class="waveA"><path d="M-30 128 C30 118 70 138 130 128 S230 118 290 128 S390 138 450 128 S550 118 610 128 S710 138 790 128 V210 H-30Z" fill="url(#sea1)"/></g>
+        <!-- ship -->
+        <g transform="translate(300 74)"><g class="ship">
+          <path d="M0 50 L80 50 L70 64 L10 64Z" fill="#5b3a1e"/><path d="M4 50 L76 50 L74 54 L6 54Z" fill="#8a5a2b"/>
+          <path d="M38 50 V4" stroke="#3a2410" stroke-width="3"/>
+          <path d="M40 8 C62 16 64 36 40 44Z" fill="#f4e8c8"/><path d="M36 14 C20 22 20 38 36 44Z" fill="#e8d6aa"/>
+          <path d="M38 4 L54 8 L38 12Z" fill="#ff8c42"/>
+        </g></g>
+        <g class="waveB"><path d="M-30 150 C40 140 80 160 150 150 S260 140 330 150 S440 160 510 150 S620 140 690 150 S790 160 820 150 V210 H-30Z" fill="url(#sea2)"/>
+          <path d="M40 160 q10 -6 20 0 M260 168 q10 -6 20 0 M520 162 q10 -6 20 0" stroke="#5fd0ff" stroke-opacity=".35" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+        <path d="M-30 178 C50 170 120 186 200 178 S360 170 440 178 S600 186 680 178 S790 172 820 176 V210 H-30Z" fill="#061233"/>
+      </svg>
     </header>
 
-    <section style="padding:24px 0 0">
-      <div style="text-align:center;font:400 clamp(20px,4vw,26px)/1 'Jua',sans-serif;color:#fff;letter-spacing:.1em">TIME TABLE</div>
-      <div style="position:relative;max-width:560px;margin:28px auto 0">
-        <svg id="map-svg" width="100%" style="display:block;overflow:visible">
-          <path id="map-path" fill="none" stroke="#ffd166" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round" opacity=".85" style="animation:dash 2.4s linear infinite"></path>
+    <section class="sec" id="timetable" style="padding-top:24px">
+      <div class="sec-head">
+        <svg class="ill" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="52" fill="#0b2459" stroke="#ffd166" stroke-width="2"/>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="#ffd166" stroke-opacity=".35" stroke-dasharray="2 5"/>
+          <path d="M60 14 L68 60 L60 106 L52 60Z" fill="#ffd166"/><path d="M60 14 L68 60 L52 60Z" fill="#fff3c9"/>
+          <path d="M14 60 L60 54 L106 60 L60 66Z" fill="#5fd0ff" opacity=".7"/>
+          <circle cx="60" cy="60" r="5" fill="#0a1d4d" stroke="#ffd166" stroke-width="2"/>
+          <text x="60" y="11" text-anchor="middle" font-family="Jua" font-size="10" fill="#ffd166">N</text>
+        </svg>
+        <div class="eyebrow">QUEST ROUTE</div>
+        <h2>TIME TABLE</h2>
+      </div>
+      <div class="map">
+        <svg id="map-svg" class="route" width="100%">
+          <path id="map-path-shadow" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="8" stroke-linecap="round" transform="translate(0 4)"></path>
+          <path id="map-path" fill="none" stroke="#ffd166" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round" opacity=".9" style="animation:dash 2.4s linear infinite"></path>
         </svg>
         <div id="map-nodes" style="position:absolute;inset:0"></div>
       </div>
     </section>
 
-    <section style="margin:40px 0 0;background:#f4e8c8;color:#3a2a10;border-radius:6px;padding:clamp(22px,4vw,30px) clamp(18px,4vw,28px);transform:rotate(-1deg);box-shadow:0 20px 40px rgba(0,0,0,.5)">
-      <div style="font:400 clamp(18px,3.6vw,22px)/1.3 'Jua',sans-serif;text-align:center;text-wrap:balance">SIDE QUEST · 마트 40분 컷 분업 쇼핑</div>
-      <div id="teams" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:18px"></div>
+    <section class="parchment" id="shopping">
+      <svg class="seal" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 2l6 6 8-2 2 8 8 2-2 8 6 6-6 6 2 8-8 2-2 8-8-2-6 6-6-6-8 2-2-8-8-2 2-8-6-6 6-6-2-8 8-2 2-8 8 2z" fill="#c0392b"/><circle cx="30" cy="30" r="15" fill="none" stroke="#f4c0b8" stroke-width="1.5"/><text x="30" y="35" text-anchor="middle" font-family="Jua" font-size="13" fill="#fde3df">40분</text></svg>
+      <h3>SIDE QUEST · 마트 40분 컷 분업 쇼핑</h3>
+      <div class="teams" id="teams"></div>
     </section>
 
-    <section style="padding:clamp(48px,8vw,72px) 0 0">
-      <div style="font:400 15px/1 'Jua',sans-serif;letter-spacing:.25em;color:#ffd166;text-align:center">FINAL BOSS</div>
-      <div style="font:400 clamp(28px,6vw,38px)/1.2 'Jua',sans-serif;color:#fff;text-align:center;margin:8px 0 24px">사칙연산 럭키드로우 룰</div>
-      <div id="rules" style="display:flex;flex-direction:column;gap:12px"></div>
-      <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
-        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px;text-align:center"><div style="font:400 11px/1 'Jua',sans-serif;letter-spacing:.2em;color:#9fb3dd">SEED MONEY</div><div style="font:400 26px/1 'Jua',sans-serif;color:#fff;margin-top:8px">₩30,000</div></div>
-        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px;text-align:center"><div style="font:400 11px/1 'Jua',sans-serif;letter-spacing:.2em;color:#9fb3dd">CUT LINE</div><div style="font:400 26px/1 'Jua',sans-serif;color:#ff8c42;margin-top:8px">≤ ₩50,000</div></div>
-        <div style="background:#ffd166;border-radius:14px;padding:16px;text-align:center;box-shadow:0 5px 0 #b8902e"><div style="font:400 11px/1 'Jua',sans-serif;letter-spacing:.2em;color:#6b5330">MAX PRIZE</div><div style="font:400 26px/1 'Jua',sans-serif;color:#2a1200;margin-top:8px">₩300,000</div></div>
+    <section class="sec" id="rules">
+      <div class="sec-head">
+        <svg class="ill" viewBox="0 0 140 110" aria-hidden="true">
+          <defs><linearGradient id="chest" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8652c"/><stop offset="1" stop-color="#6b3a16"/></linearGradient></defs>
+          <ellipse cx="70" cy="100" rx="56" ry="7" fill="#000" opacity=".3"/>
+          <g style="animation:shine 2.6s ease-in-out infinite"><path d="M70 6v14M48 14l6 10M92 14l-6 10M30 30l10 6M110 30l-10 6" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/></g>
+          <path d="M26 52 C26 30 114 30 114 52Z" fill="url(#chest)"/><path d="M26 52 C26 30 114 30 114 52" fill="none" stroke="#ffd166" stroke-width="3"/>
+          <circle cx="50" cy="48" r="7" fill="#ffd166"/><circle cx="64" cy="44" r="7" fill="#ffe9a8"/><circle cx="80" cy="47" r="7" fill="#ffd166"/><circle cx="92" cy="50" r="6" fill="#ffe9a8"/>
+          <rect x="22" y="52" width="96" height="44" rx="4" fill="url(#chest)" stroke="#3d1f08" stroke-width="2"/>
+          <rect x="22" y="52" width="96" height="8" fill="#ffd166"/><path d="M40 52v44M100 52v44" stroke="#ffd166" stroke-width="5"/>
+          <rect x="62" y="62" width="16" height="18" rx="3" fill="#ffd166" stroke="#b8902e" stroke-width="2"/><circle cx="70" cy="70" r="2.5" fill="#3d1f08"/>
+        </svg>
+        <div class="eyebrow">FINAL BOSS</div>
+        <h2>사칙연산 럭키드로우 룰</h2>
+      </div>
+      <div class="rules" id="rules-list"></div>
+      <div class="stats">
+        <div class="stat"><div class="k">SEED MONEY</div><div class="v">₩30,000</div></div>
+        <div class="stat"><div class="k">CUT LINE</div><div class="v" style="color:var(--orange)">≤ ₩50,000</div></div>
+        <div class="stat gold"><div class="k">MAX PRIZE</div><div class="v">₩300,000</div></div>
       </div>
     </section>
 
-    <footer style="padding:clamp(56px,10vw,88px) 0 60px;text-align:center">
-      <div style="font:400 clamp(22px,5vw,30px)/1.3 'Jua',sans-serif;color:#fff;text-wrap:balance">12:40, 청라 홈플러스 마트 앞 식당에서 만나요</div>
-      <div style="font:400 13px/1.7 'Noto Sans KR',sans-serif;color:#9fb3dd;margin-top:12px">DYU CHAMPIONSHIP · 2026</div>
+    <section class="sec" id="score">
+      <div class="sec-head">
+        <svg class="ill" viewBox="0 0 120 110" aria-hidden="true">
+          <defs><linearGradient id="cup" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset=".55" stop-color="#ffd166"/><stop offset="1" stop-color="#c8962e"/></linearGradient></defs>
+          <ellipse cx="60" cy="102" rx="40" ry="6" fill="#000" opacity=".3"/>
+          <path d="M34 14h52v22a26 26 0 0 1-52 0z" fill="url(#cup)" stroke="#8a6416" stroke-width="2"/>
+          <path d="M34 20H20a12 12 0 0 0 16 20M86 20h14a12 12 0 0 1-16 20" fill="none" stroke="#ffd166" stroke-width="5"/>
+          <path d="M54 62h12l3 18H51z" fill="#c8962e"/><rect x="38" y="80" width="44" height="16" rx="3" fill="#5b3a1e" stroke="#ffd166" stroke-width="2"/>
+          <path d="M60 22l3.5 7.5 8 .8-6 5.4 1.8 8-7.3-4.2-7.3 4.2 1.8-8-6-5.4 8-.8z" fill="#fff8dc"/>
+          <path d="M42 18v14" stroke="#fff" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="eyebrow">SCORE BOARD</div>
+        <h2>게임 점수 기록</h2>
+        <p class="lead" style="animation:none;margin-top:10px;font-size:13px">진행자 폰에만 저장돼요. 결과는 ‘결과 복사’로 단톡방에 공유!</p>
+      </div>
+
+      <div class="board">
+        <div class="panel">
+          <h4><span class="step" style="background:var(--mint)">1</span>참가자 등록<small id="pcount"></small></h4>
+          <form class="addrow" id="addForm" autocomplete="off">
+            <input class="input" id="nameInput" placeholder="이름 (쉼표로 여러 명 입력 가능)" maxlength="80">
+            <button class="btn" type="submit">추가</button>
+          </form>
+          <div class="players" id="players"></div>
+        </div>
+
+        <div class="panel">
+          <h4><span class="step" style="background:var(--sky)">2</span>티켓 획득<small>족구 승리 +1 · 1등 3 · 2등 2 · 3등 1</small></h4>
+          <div style="font:400 14px/1 var(--jua);color:var(--mint);margin-bottom:10px">족구 승리 팀</div>
+          <div class="toggles" id="jokgu"></div>
+          <div style="font:400 14px/1 var(--jua);color:var(--sky);margin:20px 0 10px">실내 게임 라운드</div>
+          <div class="rounds" id="rounds"></div>
+        </div>
+
+        <div class="panel">
+          <h4><span class="step" style="background:var(--violet)">3</span>티켓 현황</h4>
+          <div class="tbl" id="ticketTable"></div>
+        </div>
+
+        <div class="panel">
+          <h4><span class="step" style="background:var(--gold)">4</span>최종 정산<small>5만 원 이하 몰수</small></h4>
+          <div class="tbl" id="settleTable"></div>
+          <p class="hint">사칙연산으로 계산한 최종 금액을 입력하면 자동으로 순위가 매겨져요. 상금은 30만 원 한도 안에서 고액 순으로 차등 지급.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn danger" id="resetBtn" type="button">전체 초기화</button>
+          <button class="btn ghost" id="copyBtn" type="button">결과 복사</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <svg viewBox="0 0 64 48" aria-hidden="true"><path d="M8 40V8" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/><path d="M8 8h40l-8 9 8 9H8z" fill="#ff8c42"/><path d="M20 12h4v4h-4zM28 16h4v4h-4zM36 12h4v4h-4z" fill="#2a1200" opacity=".5"/></svg>
+      <div class="big">12:40, 청라 홈플러스 마트 앞 식당에서 만나요</div>
+      <div class="small">DYU CHAMPIONSHIP · 2026</div>
     </footer>
   </div>
 </div>
+
+<nav class="nav" id="nav">
+  <a href="#timetable">일정</a><a href="#shopping">쇼핑</a><a href="#rules">룰</a><a href="#score">점수판</a>
+</nav>
+<div class="toast" id="toast"></div>
 
 <script>
 // Pin mode: "auto" follows the current time; "hidden" hides it; "1".."14" pins a step.
 // Override with ?pin=5 or ?pin=hidden in the URL.
 const PIN_MODE = new URLSearchParams(location.search).get("pin") || "auto";
 
+// [start, end, title, highlight, icon]
 const raw = [
-  ["12:40","13:30","마트 인근 집결 및 점심 식사",0],
-  ["13:30","14:20","대형마트 3개 조 분산 쇼핑 & 계산",0],
-  ["14:20","15:00","숙소 이동",0],
-  ["15:00","15:20","입실, 짐 정리 및 환복",0],
-  ["15:20","16:50","족구 대전 (랜덤 팀전)",1],
-  ["16:50","17:30","샤워 정비 및 숯불 세팅",0],
-  ["17:30","19:15","삼겹살 바비큐 만찬",1],
-  ["19:15","19:30","아레나 세팅 (기본 자본 3만 원 부여!)",0],
-  ["19:30","20:20","Game 1,2",1],
-  ["20:20","20:35","휴식",0],
-  ["20:35","21:25","Game 3,4",1],
-  ["21:25","21:50","사칙연산 정산 타임",1],
-  ["21:50","22:00","마무리",0],
-  ["22:00","","자유 음주 & 야식",0],
+  ["12:40","13:30","마트 인근 집결 및 점심 식사",0,"meal"],
+  ["13:30","14:20","대형마트 3개 조 분산 쇼핑 & 계산",0,"cart"],
+  ["14:20","15:00","숙소 이동",0,"van"],
+  ["15:00","15:20","입실, 짐 정리 및 환복",0,"home"],
+  ["15:20","16:50","족구 대전 (랜덤 팀전)",1,"ball"],
+  ["16:50","17:30","샤워 정비 및 숯불 세팅",0,"drop"],
+  ["17:30","19:15","삼겹살 바비큐 만찬",1,"fire"],
+  ["19:15","19:30","아레나 세팅 (기본 자본 3만 원 부여!)",0,"coin"],
+  ["19:30","20:20","Game 1,2",1,"pad"],
+  ["20:20","20:35","휴식",0,"cup"],
+  ["20:35","21:25","Game 3,4",1,"pad"],
+  ["21:25","21:50","사칙연산 정산 타임",1,"calc"],
+  ["21:50","22:00","마무리",0,"flag"],
+  ["22:00","","자유 음주 & 야식",0,"beer"],
 ];
 const teams = [
-  { id: "A", name: "정육 / 수산", items: "삼겹살, 목살, 소시지, 새우 등" },
-  { id: "B", name: "주류 / 음료", items: "소주, 맥주, 생수, 탄산, 얼음, 종이컵, 휴지" },
-  { id: "C", name: "채소 / 기타", items: "상추, 마늘, 버섯, 김치, 햇반, 라면, 간식" },
+  { id: "A", name: "정육 / 수산", items: "삼겹살, 목살, 소시지, 새우 등", icon: "fire" },
+  { id: "B", name: "주류 / 음료", items: "소주, 맥주, 생수, 탄산, 얼음, 종이컵, 휴지", icon: "beer" },
+  { id: "C", name: "채소 / 기타", items: "상추, 마늘, 버섯, 김치, 햇반, 라면, 간식", icon: "cart" },
 ];
 const rules = [
   { n: "1", title: "시드머니", lines: ["전원 기본 3만 원 장착 시작"], c: "#7ff5d6" },
@@ -107,92 +398,260 @@ const rules = [
   { n: "4", title: "룰 (중요!)", lines: ["최종 계산 금액이 5만 원 이하(5만 원 포함)면 상금 0원(전액 몰수)", "최대 상금 총액 30만 원 한도 내 고액 순 차등 지급!"], c: "#ffd166" },
 ];
 
+const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const won = (v) => "₩" + Math.round(v).toLocaleString("ko-KR");
+
+/* ---------- map ---------- */
 const n = raw.length, W = 520, step = 104, mapH = step * n;
 const min = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
 
-function renderMap() {
-  const now = new Date();
-  const nowM = now.getHours() * 60 + now.getMinutes();
+function currentStep() {
+  if (PIN_MODE === "hidden") return -1;
+  if (PIN_MODE !== "auto") return Math.min(n - 1, Math.max(0, (parseInt(PIN_MODE, 10) || 1) - 1));
+  const now = new Date(), nowM = now.getHours() * 60 + now.getMinutes();
   let cur = -1;
-  if (PIN_MODE === "auto") { if (nowM >= min("12:40")) raw.forEach(([s], i) => { if (nowM >= min(s)) cur = i; }); }
-  else if (PIN_MODE !== "hidden") cur = Math.min(n - 1, Math.max(0, parseInt(PIN_MODE, 10) - 1 || 0));
+  if (nowM >= min("12:40")) raw.forEach(([s], i) => { if (nowM >= min(s)) cur = i; });
+  return cur;
+}
 
-  const nodes = raw.map(([s, e, title, hi], i) => {
-    const left = i % 2 === 0, x = left ? 70 : W - 70, y = i * step + 44, isCurrent = i === cur;
+// island illustration: water ripple, sand, grass, icon medallion
+function islandSVG(kind, icon) {
+  const pal = {
+    base: { grass: "#3fae6a", grassD: "#2b8a50", medal: "#163d8f", medalLine: "#5fd0ff", ic: "#fff" },
+    hi:   { grass: "#3fae6a", grassD: "#2b8a50", medal: "#ffd166", medalLine: "#fff3c9", ic: "#2a1200" },
+    cur:  { grass: "#4cc27a", grassD: "#2b8a50", medal: "#ff8c42", medalLine: "#ffd9bd", ic: "#2a1200" },
+  }[kind];
+  return `<svg viewBox="0 0 100 80" aria-hidden="true">
+    <ellipse cx="50" cy="62" rx="48" ry="14" fill="#5fd0ff" opacity=".18"/>
+    <ellipse cx="50" cy="60" rx="40" ry="11" fill="none" stroke="#9fe3ff" stroke-opacity=".5" stroke-dasharray="4 5"/>
+    <ellipse cx="50" cy="56" rx="36" ry="12" fill="#c99a52"/>
+    <ellipse cx="50" cy="52" rx="36" ry="12" fill="#f0d08f"/>
+    <path d="M18 50 C22 38 40 34 50 36 C62 34 80 38 82 50 C72 56 28 56 18 50Z" fill="${pal.grassD}"/>
+    <path d="M20 47 C25 37 41 33 50 35 C61 33 77 37 80 47 C70 52 30 52 20 47Z" fill="${pal.grass}"/>
+    ${kind !== "base" ? `<path d="M78 46 C77 34 79 26 83 20" stroke="#7a4e22" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M83 20 C76 16 69 19 66 23 M83 20 C89 13 96 15 98 20 M83 20 C83 12 88 9 92 9 M83 20 C78 13 72 13 69 15" stroke="#2b8a50" stroke-width="3.5" fill="none" stroke-linecap="round"/>` : ""}
+    <circle cx="48" cy="30" r="19" fill="${pal.medal}" stroke="${pal.medalLine}" stroke-width="2.5"/>
+    <svg x="36" y="18" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${pal.ic}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><use href="#i-${icon}"/></svg>
+  </svg>`;
+}
+
+function renderMap() {
+  const cur = currentStep();
+  const nodes = raw.map(([s, e, title, hi, icon], i) => {
+    const left = i % 2 === 0, x = left ? 72 : W - 72, y = i * step + 48, isCurrent = i === cur;
     return {
-      x, y, xp: x / W * 100, yp: y / mapH * 100, title, isCurrent,
+      x, y, xp: x / W * 100, yp: y / mapH * 100, title, isCurrent, hi, icon,
       time: e ? `${s} ~ ${e}` : `${s} ~`,
-      lxp: (left ? x + 44 : 70 - 44) / W * 100, lwp: (W - 140 - 44 - 36) / W * 100, ta: left ? "left" : "right",
-      lvLabel: hi ? "★" : `LV${i + 1}`,
-      islandBg: isCurrent ? "radial-gradient(ellipse at 50% 30%,#ffb067,#ff8c42 70%)" : hi ? "radial-gradient(ellipse at 50% 30%,#ffe9a8,#ffd166 70%)" : "radial-gradient(ellipse at 50% 30%,#2f6bd9,#163d8f 70%)",
-      islandFg: hi || isCurrent ? "#2a1200" : "#fff",
-      timeC: isCurrent ? "#ff8c42" : "#ffd166",
+      lxp: (left ? x + 62 : 0) / W * 100, lwp: (W - 72 - 62 - 16) / W * 100, ta: left ? "left" : "right",
     };
   });
 
   let pathD = `M ${nodes[0].x} ${nodes[0].y}`;
   for (let i = 1; i < n; i++) { const a = nodes[i - 1], b = nodes[i]; pathD += ` C ${a.x} ${a.y + step / 2}, ${b.x} ${b.y - step / 2}, ${b.x} ${b.y}`; }
-  document.getElementById("map-svg").setAttribute("viewBox", `0 0 ${W} ${mapH}`);
-  document.getElementById("map-path").setAttribute("d", pathD);
+  $("map-svg").setAttribute("viewBox", `0 0 ${W} ${mapH}`);
+  $("map-path").setAttribute("d", pathD);
+  $("map-path-shadow").setAttribute("d", pathD);
 
-  let html = nodes.map((nd, i) => `
-    <div style="position:absolute;left:${nd.xp}%;top:${nd.yp}%;transform:translate(-50%,-50%);animation:pop .6s ease ${i * 110 + 300}ms both">
-      <div style="position:relative;width:clamp(48px,11vw,68px);aspect-ratio:8/5;border-radius:50%;background:${nd.islandBg};box-shadow:0 8px 0 #0b2459,0 0 26px rgba(79,163,255,.5);display:flex;align-items:center;justify-content:center;font:400 clamp(11px,2.4vw,14px)/1 'Jua',sans-serif;color:${nd.islandFg}">${nd.lvLabel}
-        ${nd.isCurrent ? '<div style="position:absolute;inset:0;border-radius:50%;border:2px solid #ff8c42;animation:ring 1.8s ease-out infinite"></div>' : ""}
+  let html = nodes.map((nd, i) => {
+    const kind = nd.isCurrent ? "cur" : nd.hi ? "hi" : "base";
+    const lv = nd.hi ? `★ LV${i + 1}` : `LV${i + 1}`;
+    return `
+    <div class="node" style="left:${nd.xp}%;top:${nd.yp}%;animation-delay:${i * 110 + 300}ms">
+      <div class="island">${islandSVG(kind, nd.icon)}
+        ${nd.isCurrent ? '<div class="ring"></div>' : ""}
+        <span class="lv ${kind === "base" ? "" : kind}">${lv}</span>
       </div>
     </div>
-    <div style="position:absolute;left:${nd.lxp}%;top:${nd.yp}%;transform:translateY(-50%);width:${nd.lwp}%;text-align:${nd.ta};animation:up .6s ease ${i * 110 + 400}ms both">
-      <div style="font:400 clamp(11px,2.4vw,13px)/1 'Jua',sans-serif;letter-spacing:.06em;color:${nd.timeC}">${nd.time}</div>
-      <div style="font:700 clamp(13px,3vw,16px)/1.4 'Noto Sans KR',sans-serif;color:#fff;margin-top:5px;text-shadow:0 2px 8px rgba(0,0,0,.6);word-break:keep-all">${esc(nd.title)}</div>
-    </div>`).join("");
+    <div class="label" style="left:${nd.lxp}%;top:${nd.yp}%;width:${nd.lwp}%;text-align:${nd.ta};animation-delay:${i * 110 + 400}ms">
+      <div class="t" style="${nd.isCurrent ? "color:var(--orange)" : ""}">${nd.time}</div>
+      <div class="n">${esc(nd.title)}</div>
+    </div>`;
+  }).join("");
 
   if (cur >= 0) {
-    const pin = { xp: nodes[cur].xp, yp: (nodes[cur].y - 26) / mapH * 100 };
-    html += `
-    <div style="position:absolute;left:${pin.xp}%;top:${pin.yp}%;animation:bob 1.6s ease-in-out infinite;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2">
-      <div style="width:28px;height:28px;background:#ff8c42;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 0 20px #ff8c42"></div>
-      <div style="background:#ff8c42;color:#2a1200;font:400 11px/1 'Jua',sans-serif;letter-spacing:.1em;padding:6px 10px;border-radius:6px;white-space:nowrap">YOU ARE HERE</div>
-    </div>`;
+    html += `<div class="pin" style="left:${nodes[cur].xp}%;top:${(nodes[cur].y - 34) / mapH * 100}%"><b></b><span>YOU ARE HERE</span></div>`;
   }
-  document.getElementById("map-nodes").innerHTML = html;
-
-  document.getElementById("status").textContent =
-    cur < 0 ? "NOW LOADING · 12:40 집결 전" : cur === n - 1 ? "FREE TIME · 자유 음주 & 야식" : `NOW PLAYING · ${raw[cur][2]}`;
+  $("map-nodes").innerHTML = html;
+  $("status").textContent = cur < 0 ? "NOW LOADING · 12:40 집결 전" : cur === n - 1 ? "FREE TIME · 자유 음주 & 야식" : `NOW PLAYING · ${raw[cur][2]}`;
   return cur;
 }
 
-// Stars (seeded so they stay put)
+/* ---------- static sections ---------- */
 const rnd = (seed) => { let x = seed; return () => (x = (x * 16807) % 2147483647) / 2147483647; };
 const r1 = rnd(42);
-document.getElementById("stars").innerHTML = Array.from({ length: 40 }, () => {
-  const s = { x: Math.round(r1() * 100), y: Math.round(r1() * 900), r: 1 + Math.round(r1() * 2), d: (2 + r1() * 3).toFixed(1), dl: (r1() * 3).toFixed(1) };
-  return `<div style="position:absolute;left:${s.x}%;top:${s.y}px;width:${s.r}px;height:${s.r}px;border-radius:50%;background:#fff;animation:twinkle ${s.d}s ease infinite;animation-delay:${s.dl}s"></div>`;
+$("stars").innerHTML = Array.from({ length: 70 }, () => {
+  const s = { x: Math.round(r1() * 100), y: Math.round(r1() * 1400), r: 1 + Math.round(r1() * 2), d: (2 + r1() * 3).toFixed(1), dl: (r1() * 3).toFixed(1) };
+  return `<div class="star" style="left:${s.x}%;top:${s.y}px;width:${s.r}px;height:${s.r}px;animation-duration:${s.d}s;animation-delay:${s.dl}s"></div>`;
 }).join("");
 
-document.getElementById("teams").innerHTML = teams.map((tm) => `
-  <div style="border:2px dashed #8a6d3b;border-radius:8px;padding:16px 12px;text-align:center">
-    <div style="font:400 32px/1 'Jua',sans-serif">${tm.id}조</div>
-    <div style="font:700 14px/1.4 'Noto Sans KR',sans-serif;margin:8px 0 4px">${esc(tm.name)}</div>
-    <div style="font:400 12px/1.7 'Noto Sans KR',sans-serif;color:#6b5330">${esc(tm.items)}</div>
+$("teams").innerHTML = teams.map((tm) => `
+  <div class="team">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#6b5330" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><use href="#i-${tm.icon}"/></svg>
+    <div class="id">${tm.id}조</div>
+    <div class="nm">${esc(tm.name)}</div>
+    <div class="it">${esc(tm.items)}</div>
   </div>`).join("");
 
-document.getElementById("rules").innerHTML = rules.map((r) => `
-  <div style="display:grid;grid-template-columns:56px 1fr;gap:14px;background:rgba(255,255,255,.08);border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,.14)">
-    <div style="width:52px;height:52px;border-radius:14px;background:${r.c};box-shadow:0 5px 0 rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font:400 24px/1 'Jua',sans-serif;color:#1a1200">${r.n}</div>
-    <div style="min-width:0"><div style="font:700 15px/1.4 'Noto Sans KR',sans-serif;color:#fff;margin:4px 0 6px">${esc(r.title)}</div>
-      ${r.lines.map((ln) => `<div style="font:400 13px/1.7 'Noto Sans KR',sans-serif;color:#c9d8f5;word-break:keep-all">${esc(ln)}</div>`).join("")}</div>
+$("rules-list").innerHTML = rules.map((r) => `
+  <div class="rule">
+    <div class="no" style="background:${r.c}">${r.n}</div>
+    <div style="min-width:0"><div class="tt">${esc(r.title)}</div>
+      ${r.lines.map((ln) => `<div class="ln">${esc(ln)}</div>`).join("")}</div>
   </div>`).join("");
 
-// Re-render only when the current step changes, so entrance animations don't replay every tick
+/* ---------- scoreboard (saved on this device only) ---------- */
+const KEY = "dyu-score-v1";
+const ROUNDS = 4, PLACE_TICKETS = [3, 2, 1], CUT = 50000, POOL = 300000;
+const blank = () => ({ players: [], jokgu: {}, rounds: Array.from({ length: ROUNDS }, () => ["", "", ""]), amounts: {} });
+let S;
+try { S = Object.assign(blank(), JSON.parse(localStorage.getItem(KEY)) || {}); } catch { S = blank(); }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+const nameOf = (id) => (S.players.find((p) => p.id === id) || {}).name || "";
+
+function ticketsOf(id) {
+  const parts = [];
+  if (S.jokgu[id]) parts.push(["족구", 1]);
+  S.rounds.forEach((places, r) => places.forEach((pid, k) => { if (pid === id) parts.push([`R${r + 1} ${k + 1}등`, PLACE_TICKETS[k]]); }));
+  return { total: parts.reduce((a, [, v]) => a + v, 0), parts };
+}
+
+function settleList() {
+  return S.players.map((p) => {
+    const raw = S.amounts[p.id];
+    const has = raw !== undefined && raw !== "";
+    const amt = has ? Number(raw) : null;
+    return { ...p, amt, has, out: has && amt <= CUT };
+  }).sort((a, b) => (b.has && !b.out) - (a.has && !a.out) || (b.amt ?? -Infinity) - (a.amt ?? -Infinity));
+}
+
+function renderPlayers() {
+  $("pcount").textContent = S.players.length ? `${S.players.length}명` : "";
+  $("players").innerHTML = S.players.length
+    ? S.players.map((p) => `<span class="pchip">${esc(p.name)}<button type="button" data-del="${p.id}" aria-label="${esc(p.name)} 삭제">×</button></span>`).join("")
+    : `<div class="empty" style="width:100%">아직 참가자가 없어요</div>`;
+
+  $("jokgu").innerHTML = S.players.length
+    ? S.players.map((p) => `<button type="button" class="tg" data-jokgu="${p.id}" aria-pressed="${!!S.jokgu[p.id]}">${esc(p.name)}</button>`).join("")
+    : `<div class="empty" style="width:100%">참가자를 먼저 등록해 주세요</div>`;
+
+  const opts = (sel) => `<option value="">-</option>` + S.players.map((p) => `<option value="${p.id}" ${p.id === sel ? "selected" : ""}>${esc(p.name)}</option>`).join("");
+  $("rounds").innerHTML = `<div class="round"><span></span><span class="hd">🥇 1등 +3</span><span class="hd">🥈 2등 +2</span><span class="hd">🥉 3등 +1</span></div>` +
+    S.rounds.map((places, r) => `<div class="round"><span class="rn">R${r + 1}</span>${places.map((pid, k) =>
+      `<select data-round="${r}" data-place="${k}" class="${pid ? "set" : ""}" aria-label="R${r + 1} ${k + 1}등">${opts(pid)}</select>`).join("")}</div>`).join("");
+  renderTables();
+}
+
+function renderTables() {
+  const rows = S.players.map((p) => ({ ...p, ...ticketsOf(p.id) })).sort((a, b) => b.total - a.total);
+  $("ticketTable").innerHTML = rows.length ? rows.map((p) => `
+    <div class="row"><span class="rk"><svg width="20" height="20" viewBox="0 0 24 24" style="color:var(--gold)"><use href="#i-ticket"/></svg></span>
+      <div class="who">${esc(p.name)}<div class="sub">${p.parts.length ? p.parts.map(([k, v]) => `${k} +${v}`).join(" · ") : "아직 티켓 없음"}</div></div>
+      <span class="tickets">${p.total}<small style="font-size:12px;color:var(--ink-3)">장</small></span></div>`).join("")
+    : `<div class="empty">참가자를 등록하면 티켓이 집계돼요</div>`;
+
+  let rank = 0;
+  $("settleTable").innerHTML = S.players.length ? settleList().map((p) => {
+    const valid = p.has && !p.out;
+    if (valid) rank++;
+    const cls = valid && rank <= 3 ? `r${rank}` : p.out ? "out" : "";
+    const rk = valid ? (rank === 1 ? "👑" : rank) : p.out ? "✕" : "-";
+    const tag = p.out ? `<span class="tag out">몰수</span>` : valid ? `<span class="tag win">상금 대상</span>` : "";
+    return `<div class="row ${cls}"><span class="rk">${rk}</span>
+      <div class="who">${esc(p.name)}${tag}<div class="sub">티켓 ${ticketsOf(p.id).total}장</div></div>
+      <input class="input amt" inputmode="numeric" placeholder="최종 금액" data-amt="${p.id}" value="${p.has ? Number(p.amt).toLocaleString("ko-KR") : ""}"></div>`;
+  }).join("") : `<div class="empty">참가자를 등록하면 정산할 수 있어요</div>`;
+}
+
+$("addForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const names = $("nameInput").value.split(/[,，\n]/).map((s) => s.trim()).filter(Boolean);
+  names.forEach((name) => { if (!S.players.some((p) => p.name === name)) S.players.push({ id: Math.random().toString(36).slice(2, 9), name }); });
+  $("nameInput").value = "";
+  save(); renderPlayers();
+});
+
+document.addEventListener("click", (e) => {
+  const del = e.target.closest("[data-del]");
+  if (del) {
+    const id = del.dataset.del;
+    if (!confirm(`${nameOf(id)} 님을 삭제할까요? 기록도 함께 지워져요.`)) return;
+    S.players = S.players.filter((p) => p.id !== id);
+    delete S.jokgu[id]; delete S.amounts[id];
+    S.rounds = S.rounds.map((pl) => pl.map((pid) => (pid === id ? "" : pid)));
+    save(); renderPlayers(); return;
+  }
+  const jk = e.target.closest("[data-jokgu]");
+  if (jk) {
+    const id = jk.dataset.jokgu;
+    S.jokgu[id] = !S.jokgu[id];
+    jk.setAttribute("aria-pressed", S.jokgu[id]);
+    save(); renderTables();
+  }
+});
+
+document.addEventListener("change", (e) => {
+  const sel = e.target.closest("select[data-round]");
+  if (!sel) return;
+  S.rounds[+sel.dataset.round][+sel.dataset.place] = sel.value;
+  sel.classList.toggle("set", !!sel.value);
+  save(); renderTables();
+});
+
+// amount: keep digits only, re-rank when the field loses focus so typing isn't interrupted
+document.addEventListener("input", (e) => {
+  const inp = e.target.closest("[data-amt]");
+  if (!inp) return;
+  const digits = inp.value.replace(/[^\d-]/g, "");
+  if (digits === "" || digits === "-") delete S.amounts[inp.dataset.amt];
+  else S.amounts[inp.dataset.amt] = Number(digits);
+  save();
+});
+document.addEventListener("focusout", (e) => {
+  if (!e.target.closest("[data-amt]")) return;
+  // moving straight to another amount field: wait so the field being edited isn't replaced
+  setTimeout(() => { if (!document.activeElement?.closest?.("[data-amt]")) renderTables(); }, 0);
+});
+
+$("resetBtn").addEventListener("click", () => {
+  if (!confirm("참가자와 모든 점수를 초기화할까요? 되돌릴 수 없어요.")) return;
+  S = blank(); save(); renderPlayers(); toast("초기화했어요");
+});
+
+$("copyBtn").addEventListener("click", async () => {
+  const lines = ["🏆 DYU 챔피언십 결과", ""];
+  let rank = 0;
+  const list = settleList();
+  if (list.some((p) => p.has)) {
+    list.forEach((p) => {
+      if (p.has && !p.out) lines.push(`${++rank}위 ${p.name} · ${won(p.amt)}`);
+    });
+    const outs = list.filter((p) => p.out);
+    if (outs.length) lines.push("", `💸 몰수: ${outs.map((p) => `${p.name}(${won(p.amt)})`).join(", ")}`);
+    lines.push("", `상금 총액 한도 ${won(POOL)} · 고액 순 차등 지급`);
+  } else {
+    lines.push("🎟 티켓 현황");
+    S.players.map((p) => ({ ...p, t: ticketsOf(p.id).total })).sort((a, b) => b.t - a.t).forEach((p) => lines.push(`${p.name} ${p.t}장`));
+  }
+  const text = lines.join("\n");
+  try { await navigator.clipboard.writeText(text); toast("결과를 복사했어요. 단톡방에 붙여넣기!"); }
+  catch { prompt("아래 내용을 복사하세요", text); }
+});
+
+let toastT;
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("on"), 2200); }
+
+/* ---------- bottom nav highlight ---------- */
+const navLinks = [...document.querySelectorAll(".nav a")];
+const io = new IntersectionObserver((ents) => ents.forEach((en) => {
+  if (en.isIntersecting) navLinks.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id));
+}), { rootMargin: "-45% 0px -50% 0px" });
+["timetable", "shopping", "rules", "score"].forEach((id) => io.observe($(id)));
+
+renderPlayers();
+// Re-render the map only when the current step changes, so entrance animations don't replay every tick
 let lastCur = renderMap();
-setInterval(() => {
-  const now = new Date(), nowM = now.getHours() * 60 + now.getMinutes();
-  let cur = -1;
-  if (PIN_MODE === "auto") { if (nowM >= min("12:40")) raw.forEach(([s], i) => { if (nowM >= min(s)) cur = i; }); }
-  else return;
-  if (cur !== lastCur) lastCur = renderMap();
-}, 30000);
+if (PIN_MODE === "auto") setInterval(() => { const c = currentStep(); if (c !== lastCur) lastCur = renderMap(); }, 30000);
 </script>
 </body>
 </html>
