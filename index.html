@@ -145,13 +145,50 @@ h1{font:400 clamp(46px,12vw,92px)/1.05 var(--jua);color:#fff;margin:14px 0 0;tex
 .tickets svg{width:18px;height:18px}
 .amt{width:108px;text-align:right}
 .prize{font:400 15px/1.3 var(--jua);color:var(--mint);margin-top:3px;white-space:normal}.prize small{font:400 11px var(--sans);color:var(--ink-3)}
-.row.r1{border-color:rgba(255,209,102,.6);background:linear-gradient(90deg,rgba(255,209,102,.18),rgba(4,12,38,.45))}
-.row.r1 .rk{color:var(--gold)}.row.r2 .rk{color:#d9e3f5}.row.r3 .rk{color:#e3a36b}
-.row.out{opacity:.75}
-.row.out .who{text-decoration:line-through;text-decoration-color:var(--red)}
+.row{position:relative}
+.row .rk svg{width:34px;height:auto;display:block;margin:0 auto}
+/* 왕 */
+.row.king{border:1.5px solid var(--gold);background:linear-gradient(110deg,rgba(255,209,102,.28) 0%,rgba(255,140,66,.12) 40%,rgba(255,240,190,.35) 50%,rgba(255,140,66,.12) 60%,rgba(4,12,38,.4) 100%);background-size:250% 100%;animation:shimmer 3.5s linear infinite;box-shadow:0 0 24px rgba(255,209,102,.3),inset 0 1px 0 rgba(255,255,255,.3);padding:14px 12px}
+.row.king .who{font-size:18px;color:#fff6d6}
+.row.king .crown{animation:crownBob 2s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(255,209,102,.8))}
+.row.noble .rk{color:#d9e3f5}.row.knight .rk{color:#e3a36b}
+.row.noble{border-color:rgba(217,227,245,.35)}.row.knight{border-color:rgba(227,163,107,.35)}
+/* 거지 */
+#settleTable{padding-bottom:6px}
+.row.beggar{background:repeating-linear-gradient(45deg,rgba(138,109,59,.22) 0 6px,rgba(91,58,30,.22) 6px 12px),#2a1e12;border:1.5px dashed #8a6d3b;transform:rotate(-1deg);filter:saturate(.7)}
+.row.beggar .who{color:#d8c3a0}
+.row.beggar .sub{color:#a68a5e}
+.row.beggar .amt{border-color:rgba(138,109,59,.5);color:#d8c3a0}
+.row.beggar .bowl{animation:beg 2.4s ease-in-out infinite;transform-origin:50% 100%}
+.prize.lost{color:#ff9aa4}
+/* rank change */
+.row.rise{box-shadow:0 0 0 2px var(--mint),0 0 30px rgba(127,245,214,.5);z-index:2}
+.row.fall{box-shadow:0 0 0 2px var(--red),0 0 20px rgba(255,93,108,.4)}
+.row.crowned .crown{animation:crownDrop .9s cubic-bezier(.3,1.6,.5,1) both,crownBob 2s ease-in-out .9s infinite}
+.row.ruined{animation:ruin .6s ease}
+@keyframes shimmer{from{background-position:100% 0}to{background-position:-150% 0}}
+@keyframes crownBob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-3px) rotate(6deg)}}
+@keyframes crownDrop{0%{transform:translateY(-120px) scale(1.8) rotate(-30deg);opacity:0}60%{opacity:1}100%{transform:none}}
+@keyframes beg{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+@keyframes ruin{0%,100%{transform:rotate(-1deg)}20%{transform:translateX(-8px) rotate(-3deg)}40%{transform:translateX(8px) rotate(2deg)}60%{transform:translateX(-5px)}80%{transform:translateX(4px)}}
+.announce{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%) scale(.5);opacity:0;pointer-events:none;z-index:70;text-align:center;padding:22px 30px;border-radius:20px;transition:transform .45s cubic-bezier(.3,1.6,.5,1),opacity .3s;min-width:220px}
+.announce.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.announce svg{width:64px;height:auto}
+.announce .ah{font:400 16px/1.2 var(--jua);letter-spacing:.08em;margin-top:6px}
+.announce .an{font:400 34px/1.2 var(--jua);margin-top:4px}
+.announce.king{background:radial-gradient(circle at 50% 0,#fff3c9,#ffd166 60%,#e0a93a);color:#2a1200;box-shadow:0 0 0 4px rgba(255,209,102,.35),0 20px 60px rgba(255,209,102,.5)}
+.announce.beggar{background:repeating-linear-gradient(45deg,#3a2a18 0 8px,#2a1e12 8px 16px);color:#d8c3a0;border:2px dashed #8a6d3b;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:65;overflow:hidden}
+.confetti i{position:absolute;top:-12px;width:8px;height:12px;border-radius:2px;animation:fall linear both}
+@keyframes fall{to{transform:translateY(105vh) rotate(var(--r))}}
 .tag{font:400 11px/1 var(--jua);letter-spacing:.05em;padding:4px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;white-space:nowrap}
 .tag.out{background:rgba(255,93,108,.2);color:#ff9aa4}
 .tag.win{background:rgba(127,245,214,.18);color:var(--mint)}
+.tag.king{background:var(--gold);color:#2a1200}
+.tag.noble{background:rgba(217,227,245,.2);color:#e6eeff}
+.tag.knight{background:rgba(227,163,107,.22);color:#f0bf90}
+.tag.commoner{background:rgba(255,255,255,.1);color:var(--ink-3)}
+.tag.beggar{background:#5b3a1e;color:#e8d6aa;border:1px dashed #c9a46a}
 .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:4px}
 .pool{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;font:400 12px/1 var(--sans);color:var(--ink-3);margin-bottom:4px}
 .pool b{font:400 20px/1 var(--jua);color:var(--gold)}
@@ -368,6 +405,7 @@ footer svg{width:64px;height:auto;margin-bottom:12px}
   <a href="#timetable">일정</a><a href="#shopping">쇼핑</a><a href="#rules">룰</a><a href="#score">점수판</a>
 </nav>
 <div class="toast" id="toast"></div>
+<div class="announce" id="announce" aria-live="polite"></div>
 
 <script>
 // Pin mode: "auto" follows the current time; "hidden" hides it; "1".."14" pins a step.
@@ -566,23 +604,93 @@ function renderTables() {
       <span class="tickets">${p.total}<small style="font-size:12px;color:var(--ink-3)">장</small></span></div>`).join("")
     : `<div class="empty">참가자를 등록하면 티켓이 집계돼요</div>`;
 
+  renderSettle();
+}
+
+/* ---------- settlement: king & beggar ---------- */
+const CROWN = `<svg viewBox="0 0 40 32" class="crown"><path d="M4 26 L2 8 L12 16 L20 3 L28 16 L38 8 L36 26Z" fill="#ffd166" stroke="#b8902e" stroke-width="2" stroke-linejoin="round"/><rect x="4" y="25" width="32" height="5" rx="1.5" fill="#e0a93a"/><circle cx="20" cy="17" r="3" fill="#ff5d6c"/><circle cx="11" cy="20" r="2" fill="#5fd0ff"/><circle cx="29" cy="20" r="2" fill="#7ff5d6"/></svg>`;
+const BOWL = `<svg viewBox="0 0 40 32" class="bowl"><path d="M4 14h32a16 13 0 0 1-32 0z" fill="#8a6d3b" stroke="#5b3a1e" stroke-width="2"/><path d="M9 18h22" stroke="#c9a46a" stroke-width="2" stroke-dasharray="3 3"/><path d="M14 9c0-2 2-2 2-4M22 9c0-2 2-2 2-4" stroke="#9fb3dd" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".6"/></svg>`;
+const CLASSES = { 1: ["왕", "king"], 2: ["귀족", "noble"], 3: ["기사", "knight"] };
+
+let prevSettle = null; // id -> { rank, out } from the last render, for change effects
+
+function renderSettle() {
+  const box = $("settleTable");
+  // FLIP: remember where each row was
+  const before = {};
+  box.querySelectorAll(".row[data-id]").forEach((el) => { before[el.dataset.id] = el.getBoundingClientRect().top; });
+
   let rank = 0;
   const list = withPrizes(settleList());
   const paid = list.reduce((a, p) => a + p.prize, 0);
-  $("settleTable").innerHTML = S.players.length ? `
+  const now = {};
+  box.innerHTML = S.players.length ? `
     <div class="pool"><span>지급 합계</span><b>${won(paid)}</b><span>/ ${won(POOL)}</span>
       <div class="bar"><i style="width:${paid / POOL * 100}%"></i></div></div>` + list.map((p) => {
     const valid = p.has && !p.out;
     if (valid) rank++;
-    const cls = valid && rank <= 3 ? `r${rank}` : p.out ? "out" : "";
-    const rk = valid ? (rank === 1 ? "👑" : rank) : p.out ? "✕" : "-";
-    const tag = p.out ? `<span class="tag out">몰수</span>`
-      : valid && !p.prize ? `<span class="tag out">한도 소진</span>` : "";
-    const prize = valid && p.prize > 0 ? `<div class="prize">상금 ${won(p.prize)}${p.prize < p.amt ? " <small>(남은 한도)</small>" : ""}</div>` : "";
-    return `<div class="row ${cls}"><span class="rk">${rk}</span>
-      <div class="who">${esc(p.name)}${tag}${prize}<div class="sub">티켓 ${ticketsOf(p.id).total}장</div></div>
-      <input class="input amt" inputmode="numeric" placeholder="최종 금액" data-amt="${p.id}" value="${p.has ? Number(p.amt).toLocaleString("ko-KR") : ""}"></div>`;
+    now[p.id] = { rank: valid ? rank : null, out: p.out, name: p.name };
+    const [title, cls] = p.out ? ["거지", "beggar"] : valid ? (CLASSES[rank] || [p.prize ? "평민" : "평민 · 한도 소진", "commoner"]) : ["대기", ""];
+    const rk = p.out ? BOWL : valid && rank === 1 ? CROWN : valid ? rank : "-";
+    const prize = valid && p.prize > 0 ? `<div class="prize">상금 ${won(p.prize)}${p.prize < p.amt ? " <small>(남은 한도)</small>" : ""}</div>`
+      : p.out ? `<div class="prize lost">₩0 · 전액 몰수</div>` : "";
+    return `<div class="row ${cls}" data-id="${p.id}"><span class="rk">${rk}</span>
+      <div class="who">${esc(p.name)}${p.has ? `<span class="tag ${cls}">${title}</span>` : ""}${prize}<div class="sub">티켓 ${ticketsOf(p.id).total}장</div></div>
+      <input class="input amt" inputmode="numeric" enterkeyhint="done" placeholder="최종 금액" data-amt="${p.id}" value="${p.has ? Number(p.amt).toLocaleString("ko-KR") : ""}"></div>`;
   }).join("") : `<div class="empty">참가자를 등록하면 정산할 수 있어요</div>`;
+
+  // FLIP: slide rows from their old spot to the new one
+  box.querySelectorAll(".row[data-id]").forEach((el) => {
+    const id = el.dataset.id, old = before[id];
+    if (old === undefined) return;
+    const dy = old - el.getBoundingClientRect().top;
+    if (Math.abs(dy) < 2) return;
+    el.style.transform = `translateY(${dy}px)`;
+    el.style.transition = "none";
+    el.classList.add(dy > 0 ? "rise" : "fall");
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.transition = "transform .7s cubic-bezier(.2,.9,.25,1.15)";
+      el.style.transform = "";
+    }));
+    setTimeout(() => el.classList.remove("rise", "fall"), 1400);
+  });
+
+  if (prevSettle) {
+    const kingId = Object.keys(now).find((id) => now[id].rank === 1);
+    const oldKing = Object.keys(prevSettle).find((id) => prevSettle[id].rank === 1);
+    const newBeggar = Object.keys(now).find((id) => now[id].out && !prevSettle[id]?.out);
+    const kingFell = newBeggar && newBeggar === oldKing;
+    if (newBeggar) box.querySelector(`.row[data-id="${newBeggar}"]`)?.classList.add("ruined");
+    if (kingId && kingId !== oldKing) box.querySelector(`.row[data-id="${kingId}"]`)?.classList.add("crowned");
+
+    if (kingFell) announce("beggar", `왕에서 거지로 몰락…`, now[newBeggar].name);
+    else if (kingId && kingId !== oldKing) { announce("king", `새로운 왕 등극!`, now[kingId].name); confetti(); }
+    else if (newBeggar) announce("beggar", `거지 확정…`, now[newBeggar].name);
+  }
+  prevSettle = now;
+}
+
+let annT;
+function announce(kind, head, name) {
+  const a = $("announce");
+  a.className = "announce " + kind;
+  a.innerHTML = `${kind === "king" ? CROWN : BOWL}<div class="ah">${head}</div><div class="an">${esc(name)}</div>`;
+  void a.offsetWidth;
+  a.classList.add("on");
+  clearTimeout(annT);
+  annT = setTimeout(() => a.classList.remove("on"), 2000);
+}
+
+function confetti() {
+  const colors = ["#ffd166", "#ff8c42", "#7ff5d6", "#5fd0ff", "#a58bff", "#fff"];
+  const layer = document.createElement("div");
+  layer.className = "confetti";
+  layer.innerHTML = Array.from({ length: 60 }, (_, i) => {
+    const x = Math.random() * 100, d = 1.2 + Math.random() * 1.2, dl = Math.random() * .3, r = Math.random() * 720 - 360;
+    return `<i style="left:${x}%;background:${colors[i % colors.length]};animation-duration:${d}s;animation-delay:${dl}s;--r:${r}deg"></i>`;
+  }).join("");
+  document.body.appendChild(layer);
+  setTimeout(() => layer.remove(), 3000);
 }
 
 $("addForm").addEventListener("submit", (e) => {
@@ -629,6 +737,7 @@ document.addEventListener("input", (e) => {
   else S.amounts[inp.dataset.amt] = Number(digits);
   save();
 });
+document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.closest("[data-amt]")) e.target.blur(); });
 document.addEventListener("focusout", (e) => {
   if (!e.target.closest("[data-amt]")) return;
   // moving straight to another amount field: wait so the field being edited isn't replaced
