@@ -155,7 +155,7 @@ h1{font:400 clamp(46px,12vw,92px)/1.05 var(--jua);color:#fff;margin:14px 0 0;tex
 .row.noble{border-color:rgba(217,227,245,.35)}.row.knight{border-color:rgba(227,163,107,.35)}
 /* 거지 */
 /* 계급 사다리 chart */
-.ladder{position:relative;height:340px;margin:0 -6px 16px;border-radius:14px;overflow-x:auto;overflow-y:hidden;background:linear-gradient(180deg,rgba(255,209,102,.16) 0%,rgba(255,209,102,.04) 22%,rgba(255,255,255,.03) 60%,rgba(91,58,30,.35) 100%);border:1px solid var(--card-line)}
+.ladder{position:relative;height:400px;margin:0 -6px 16px;border-radius:14px;overflow-x:auto;overflow-y:hidden;background:linear-gradient(180deg,rgba(255,209,102,.16) 0%,rgba(255,209,102,.04) 22%,rgba(255,255,255,.03) 60%,rgba(91,58,30,.35) 100%);border:1px solid var(--card-line)}
 .ladder:empty{display:none}
 .ladder .plot{position:relative;height:100%;min-width:100%}
 .ladder .zone{position:absolute;left:0;right:0;pointer-events:none}
@@ -168,12 +168,13 @@ h1{font:400 clamp(46px,12vw,92px)/1.05 var(--jua);color:#fff;margin:14px 0 0;tex
 .ladder .grid{position:absolute;left:0;right:0;border-top:1px dashed rgba(255,255,255,.08);transition:bottom .8s}
 .ladder .grid b{position:absolute;right:6px;top:-14px;font:400 10px/1 var(--sans);color:var(--ink-3);opacity:.7}
 .tok{position:absolute;width:var(--col,60px);margin-left:calc(var(--col,60px) / -2);display:flex;flex-direction:column;align-items:center;transition:bottom .9s cubic-bezier(.3,1.25,.45,1),left .6s ease;z-index:1}
-.tok .av{width:calc(var(--col,60px) * .73);height:calc(var(--col,60px) * .87);transition:transform .3s}
+.tok .av{width:calc(var(--col,60px) * .98);height:calc(var(--col,60px) * 1.24);transition:transform .3s}
 .tok .av svg{width:100%;height:100%;display:block;overflow:visible}
 .tok .nm{font:700 12px/1.2 var(--sans);color:#fff;white-space:nowrap;max-width:calc(var(--col,60px) + 6px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 4px rgba(0,0,0,.8)}
 .tok .am{font:400 11px/1.2 var(--jua);color:var(--ink-3);white-space:nowrap}
-.tok.king{z-index:3}.tok.king .nm{margin-top:7px}.tok.king .av{transform:scale(1.25);filter:drop-shadow(0 0 12px rgba(255,209,102,.8))}.tok.king .am{color:var(--gold)}
-.tok.beggar .am{color:#ff9aa4}.tok.beggar .av{animation:beg 2.4s ease-in-out infinite}
+.tok.king{z-index:3}.tok.king .nm{color:var(--gold);font-size:13px}.tok.king .av{transform:scale(1.3);transform-origin:50% 100%;filter:drop-shadow(0 0 14px rgba(255,209,102,.9))}.tok.king .am{color:var(--gold)}
+.tok.beggar .am{color:#ff9aa4}.tok.beggar .av{filter:saturate(.8)}
+.tok .spk{transform-box:fill-box;transform-origin:center;animation:twinkle 1.6s ease-in-out infinite}
 .tok.idle .am{color:var(--ink-3)}
 .tok.climb .av{animation:hop .45s ease 2}
 @keyframes hop{50%{transform:translateY(-8px)}}
@@ -223,6 +224,11 @@ footer svg{width:64px;height:auto;margin-bottom:12px}
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".45" stop-color="#ffd166"/><stop offset="1" stop-color="#c8902e"/></linearGradient>
+    <linearGradient id="gKingRobe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8e1b1b"/><stop offset=".5" stop-color="#e5383b"/><stop offset="1" stop-color="#8e1b1b"/></linearGradient>
+    <radialGradient id="gHalo"><stop offset=".3" stop-color="#ffe8a8" stop-opacity=".55"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gArmor" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d9ab3"/><stop offset=".35" stop-color="#eef3fa"/><stop offset=".6" stop-color="#b5c1d6"/><stop offset="1" stop-color="#7d8aa3"/></linearGradient>
+    <linearGradient id="gNoble" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b2a7a"/><stop offset=".5" stop-color="#6d4fd1"/><stop offset="1" stop-color="#3b2a7a"/></linearGradient>
     <!-- tiny line icons used on the map islands -->
     <symbol id="i-meal" viewBox="0 0 24 24"><path d="M3 12h18a9 9 0 0 1-18 0z"/><path d="M9 8c0-1.6 1.5-1.6 1.5-3.2M13 8c0-1.6 1.5-1.6 1.5-3.2"/></symbol>
     <symbol id="i-cart" viewBox="0 0 24 24"><path d="M2 4h3l2.4 11h11l2-8H6"/><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></symbol>
@@ -665,29 +671,130 @@ function renderSettle() {
 
 
 /* ---------- 계급 사다리: everyone climbs by their amount, beggar at the bottom, king on top ---------- */
+// 4-point sparkle
+const spark = (x, y, r, d) => `<path class="spk" style="animation-delay:${d}s" d="M${x} ${y - r}L${x + r * .28} ${y - r * .28}L${x + r} ${y}L${x + r * .28} ${y + r * .28}L${x} ${y + r}L${x - r * .28} ${y + r * .28}L${x - r} ${y}L${x - r * .28} ${y - r * .28}Z" fill="#fff8dc"/>`;
+const fly = (cx, cy, r, dur) => `<g><animateTransform attributeName="transform" type="rotate" from="0 ${cx} ${cy}" to="360 ${cx} ${cy}" dur="${dur}s" repeatCount="indefinite"/>
+  <ellipse cx="${cx + r}" cy="${cy}" rx="1.3" ry="1" fill="#1a1a1a"/><ellipse cx="${cx + r - .6}" cy="${cy - 1.3}" rx="1.1" ry=".7" fill="#dfe8f5" opacity=".8"/><ellipse cx="${cx + r + .6}" cy="${cy - 1.3}" rx="1.1" ry=".7" fill="#dfe8f5" opacity=".8"/></g>`;
+
+// Characters are drawn on a 60x72 canvas, feet on y≈70
 function avatar(kind) {
-  const robe = { king: "#c0392b", noble: "#5b6ee1", knight: "#9aa7bd", commoner: "#6b8f5e", beggar: "#7a5a35", idle: "#7d8fb8" }[kind];
-  const hat = {
-    king: `<path d="M12 10 L11 1 L16 5 L22 -2 L28 5 L33 1 L32 10Z" fill="#ffd166" stroke="#b8902e" stroke-width="1.2" stroke-linejoin="round"/><circle cx="22" cy="6" r="1.6" fill="#ff5d6c"/>`,
-    noble: `<rect x="14" y="-3" width="16" height="11" rx="1.5" fill="#1a1a2e"/><rect x="11" y="7" width="22" height="3" rx="1.5" fill="#1a1a2e"/><rect x="14" y="4" width="16" height="2" fill="#a58bff"/>`,
-    knight: `<path d="M12 15 C12 4 32 4 32 15 L32 18 L12 18Z" fill="#c9d3e3" stroke="#7d8aa3" stroke-width="1.2"/><path d="M14 15h16" stroke="#3a4a75" stroke-width="2"/><path d="M22 3 C25 -2 30 -1 29 3" stroke="#ff5d6c" stroke-width="2.5" fill="none" stroke-linecap="round"/>`,
-    commoner: `<path d="M12 11 C14 4 30 4 32 11Z" fill="#8a6d3b"/>`,
-    beggar: `<path d="M13 9 l3 -3 l2 2 l3 -3 l2 3 l3 -2 l2 3 l3 0" stroke="#5b3a1e" stroke-width="2" fill="none" stroke-linecap="round"/>`,
-    idle: "",
+  const C = {
+    king: `
+      <circle cx="30" cy="30" r="30" fill="url(#gHalo)"/>
+      <g stroke="#ffd166" stroke-width="1" opacity=".35">${Array.from({ length: 12 }, (_, i) => { const a = i * Math.PI / 6; return `<path d="M${30 + Math.cos(a) * 16} ${30 + Math.sin(a) * 16}L${30 + Math.cos(a) * 30} ${30 + Math.sin(a) * 30}"/>`; }).join("")}</g>
+      <path d="M14 33 C5 47 3 61 1 70 L59 70 C57 61 55 47 46 33Z" fill="#6e0d0d"/>
+      <path d="M1 70 L59 70 L58 65 L2 65Z" fill="#fffaf0"/>
+      ${[6, 14, 22, 30, 38, 46, 54].map((x) => `<path d="M${x} 66.5 l.8 2.2 l-1.6 0z" fill="#111"/>`).join("")}
+      <path d="M17 33 C14 46 13 58 13 70 L47 70 C47 58 46 46 43 33Z" fill="url(#gKingRobe)"/>
+      <path d="M20 40 Q22 55 19 69 M40 40 Q38 55 41 69" stroke="#5e0b0b" stroke-width=".8" fill="none" opacity=".6"/>
+      <rect x="27" y="36" width="6" height="34" fill="url(#gGold)"/>
+      <circle cx="30" cy="50" r="1.6" fill="#5fd0ff"/><circle cx="30" cy="57" r="1.6" fill="#ff5d6c"/><circle cx="30" cy="64" r="1.6" fill="#7ff5d6"/>
+      <path d="M14 34 Q30 45 46 34 Q47 29 42 28 Q30 36 18 28 Q13 29 14 34Z" fill="#fffaf0"/>
+      ${[[18, 32], [23, 35], [30, 37.5], [37, 35], [42, 32]].map(([x, y]) => `<path d="M${x} ${y} l.7 2 l-1.4 0z" fill="#111"/>`).join("")}
+      <path d="M21 37 Q30 47 39 37" stroke="#ffd166" stroke-width="1.2" fill="none" stroke-dasharray="1.6 .8"/>
+      <circle cx="30" cy="45" r="3.2" fill="url(#gGold)" stroke="#a87414" stroke-width=".7"/><circle cx="30" cy="45" r="1.3" fill="#ff5d6c"/>
+      <circle cx="30" cy="21" r="10" fill="#f6cfa6"/>
+      <circle cx="23.5" cy="24" r="2" fill="#ff9c8a" opacity=".55"/><circle cx="36.5" cy="24" r="2" fill="#ff9c8a" opacity=".55"/>
+      <path d="M23.5 20.5 q2 -2 4 0 M32.5 20.5 q2 -2 4 0" stroke="#2a1200" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <path d="M20.5 23 Q21 36 30 37 Q39 36 39.5 23 Q36 30 30 30 Q24 30 20.5 23Z" fill="#d4943a"/>
+      <path d="M23 34 q1 2 3 2 M28 36 q2 1.5 4 0 M34 36 q2 0 3 -2" stroke="#a8691e" stroke-width=".7" fill="none"/>
+      <path d="M22 27 Q26 23.5 30 26.5 Q34 23.5 38 27 Q35 29.5 30 28 Q25 29.5 22 27Z" fill="#9a5e1c"/>
+      <circle cx="21.5" cy="26" r="1.2" fill="none" stroke="#9a5e1c" stroke-width="1"/><circle cx="38.5" cy="26" r="1.2" fill="none" stroke="#9a5e1c" stroke-width="1"/>
+      <path d="M19.5 15 L18 1 L23.5 8 L26.5 -1 L30 7 L33.5 -1 L36.5 8 L42 1 L40.5 15Z" fill="url(#gGold)" stroke="#a87414" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M21 13 Q30 6 39 13" fill="#b3121f" opacity=".85"/>
+      <rect x="19" y="12.5" width="22" height="4.2" rx="1" fill="#e0a93a" stroke="#a87414" stroke-width=".6"/>
+      <circle cx="18" cy="1" r="1.4" fill="#fff"/><circle cx="26.5" cy="-1" r="1.4" fill="#fff"/><circle cx="33.5" cy="-1" r="1.4" fill="#fff"/><circle cx="42" cy="1" r="1.4" fill="#fff"/><circle cx="30" cy="5.5" r="1.6" fill="#fff"/>
+      <circle cx="23" cy="14.6" r="1.3" fill="#3b82f6"/><circle cx="30" cy="14.6" r="1.8" fill="#e11d48"/><circle cx="37" cy="14.6" r="1.3" fill="#10b981"/>
+      <path d="M51 68 L47 23" stroke="url(#gGold)" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="46.8" cy="20.5" r="3.8" fill="url(#gGold)" stroke="#a87414" stroke-width=".7"/><path d="M46.6 16.7 v-4 M44.8 14.6 h3.6" stroke="#ffd166" stroke-width="1.3"/>
+      <circle cx="46.8" cy="20.5" r="1.4" fill="#a855f7"/>
+      <circle cx="47.6" cy="45" r="2.8" fill="#f6cfa6"/>
+      ${spark(8, 12, 3.5, 0)}${spark(53, 34, 3, .6)}${spark(6, 44, 2.6, 1.1)}${spark(56, 8, 2.4, 1.6)}${spark(46.8, 20.5, 4.5, .3)}`,
+
+    noble: `
+      <path d="M17 34 C14 46 13 58 14 70 L46 70 C47 58 46 46 43 34Z" fill="url(#gNoble)"/>
+      <path d="M30 34 L22 50 L19 70 M30 34 L38 50 L41 70" stroke="#3b2a7a" stroke-width="1" fill="none"/>
+      <path d="M25 34 L30 46 L35 34Z" fill="#fff"/><path d="M28 37 q2 1 4 0 M28 40 q2 1 4 0 M28.5 43 q1.5 1 3 0" stroke="#d8d8e8" stroke-width=".8" fill="none"/>
+      <path d="M26 34 L30 36 L34 34 L34 37.5 L30 35.8 L26 37.5Z" fill="#e11d48"/>
+      <circle cx="35" cy="52" r=".9" fill="#ffd166"/><circle cx="35" cy="57" r=".9" fill="#ffd166"/><circle cx="25" cy="52" r=".9" fill="#ffd166"/><circle cx="25" cy="57" r=".9" fill="#ffd166"/>
+      <circle cx="30" cy="22" r="9.5" fill="#f6cfa6"/>
+      <path d="M24 22 h4 M32 22 h4" stroke="#2a1200" stroke-width="1.1" stroke-linecap="round"/>
+      <circle cx="34" cy="22" r="3" fill="rgba(200,230,255,.35)" stroke="#ffd166" stroke-width="1"/><path d="M37 22 Q40 30 36 36" stroke="#ffd166" stroke-width=".6" fill="none"/>
+      <path d="M25 27 Q28 25.5 30 27 Q32 25.5 35 27" stroke="#3a2410" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <path d="M29 30 h3" stroke="#2a1200" stroke-width=".9" stroke-linecap="round"/>
+      <rect x="21" y="-1" width="18" height="15" rx="1.5" fill="#15132a"/><rect x="21" y="9" width="18" height="3" fill="#a58bff"/>
+      <rect x="17" y="13" width="26" height="3" rx="1.5" fill="#15132a"/><path d="M23 1 v10" stroke="#fff" stroke-opacity=".15" stroke-width="2"/>
+      <path d="M49 69 L46 40" stroke="#2a1200" stroke-width="1.8" stroke-linecap="round"/><circle cx="45.8" cy="38.5" r="2.4" fill="url(#gGold)"/>
+      <circle cx="46.5" cy="46" r="2.6" fill="#fff"/>`,
+
+    knight: `
+      <path d="M17 34 C14 46 14 58 15 70 L45 70 C46 58 46 46 43 34Z" fill="url(#gArmor)"/>
+      <path d="M17 46 Q30 50 43 46 M16 56 Q30 60 44 56" stroke="#6b7a96" stroke-width="1" fill="none"/>
+      <path d="M22 37 v28" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+      <ellipse cx="17" cy="36" rx="6" ry="4" fill="url(#gArmor)" stroke="#6b7a96" stroke-width=".7"/><ellipse cx="43" cy="36" rx="6" ry="4" fill="url(#gArmor)" stroke="#6b7a96" stroke-width=".7"/>
+      <path d="M19 30 C18 14 42 14 41 30 L41 33 L19 33Z" fill="url(#gArmor)" stroke="#6b7a96" stroke-width=".8"/>
+      <path d="M21 23 h18" stroke="#1a2238" stroke-width="2.4"/><path d="M30 25 v7 M26 27 v4 M34 27 v4" stroke="#1a2238" stroke-width="1"/>
+      <path d="M30 10 v6" stroke="#6b7a96" stroke-width="2"/>
+      <path d="M30 10 C34 2 44 2 46 8 C41 6 37 8 34 12 C36 7 33 6 30 10Z" fill="#e11d48"/>
+      <path d="M50 64 L50 18" stroke="#e6edf7" stroke-width="2.6" stroke-linecap="round"/><path d="M50 18 L50 14" stroke="#e6edf7" stroke-width="1.6"/>
+      <path d="M45 58 h10" stroke="#7a4e22" stroke-width="2.6" stroke-linecap="round"/><circle cx="50" cy="66" r="1.8" fill="#ffd166"/>
+      <path d="M4 40 h16 v12 C20 60 12 64 12 64 C12 64 4 60 4 52Z" fill="#1d4ed8" stroke="#ffd166" stroke-width="1.4"/>
+      <path d="M12 43 v16 M7 49 h10" stroke="#ffd166" stroke-width="2"/>`,
+
+    commoner: `
+      <path d="M18 35 C16 46 15 58 16 70 L44 70 C45 58 44 46 42 35Z" fill="#5f8a4f"/>
+      <path d="M17 52 Q30 55 43 52" stroke="#7a4e22" stroke-width="2.4" fill="none"/><rect x="28" y="51" width="4" height="4" fill="#c9a46a"/>
+      <path d="M24 35 L30 41 L36 35" stroke="#eadfbe" stroke-width="1.5" fill="none"/>
+      <circle cx="30" cy="23" r="9.5" fill="#f2c9a0"/>
+      <circle cx="25" cy="26" r="1.8" fill="#ff9c8a" opacity=".5"/><circle cx="35" cy="26" r="1.8" fill="#ff9c8a" opacity=".5"/>
+      <circle cx="26.5" cy="22.5" r="1.2" fill="#2a1200"/><circle cx="33.5" cy="22.5" r="1.2" fill="#2a1200"/>
+      <path d="M27 27 q3 2.5 6 0" stroke="#2a1200" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="30" cy="15" rx="15" ry="3.5" fill="#e3c376"/><path d="M22 15 C23 8 37 8 38 15Z" fill="#d4b061"/><path d="M22.5 13 h15" stroke="#a5402d" stroke-width="1.6"/>
+      <path d="M17 14 l-2 1 M43 14 l2 1 M19 16 l-2 2" stroke="#c9a04f" stroke-width=".7"/>`,
+
+    beggar: `
+      <ellipse cx="30" cy="69" rx="24" ry="3" fill="#8a7040"/><path d="M8 69 h44 M11 68 h38" stroke="#b39556" stroke-width=".6" stroke-dasharray="3 2"/>
+      <g stroke="#9bc46a" stroke-width="1.3" fill="none" stroke-linecap="round">
+        <path d="M9 44 q-3 -4 0 -8 q3 -4 0 -8"><animate attributeName="opacity" values="0;.85;0" dur="2.2s" repeatCount="indefinite"/></path>
+        <path d="M14 38 q-3 -4 0 -8 q3 -4 0 -8"><animate attributeName="opacity" values="0;.85;0" dur="2.2s" begin=".7s" repeatCount="indefinite"/></path>
+        <path d="M52 30 q-3 -4 0 -8 q3 -4 0 -8"><animate attributeName="opacity" values="0;.85;0" dur="2.2s" begin="1.4s" repeatCount="indefinite"/></path>
+      </g>
+      <g transform="rotate(7 30 70)">
+        <path d="M19 37 C16 48 15 57 14 66 l3 -3 l2.5 4 l3 -4.5 l3 4 l2.5 -3 l3 4 l3 -4 l2.5 3.5 l3 -4 l2 3 C44 57 43 48 41 37 Q30 33 19 37Z" fill="#7a5a35"/>
+        <path d="M19 37 C17 46 16 54 15 62" stroke="#5b3a1e" stroke-width="1" fill="none"/>
+        <rect x="20" y="44" width="7" height="6" fill="#a68a5e" transform="rotate(-12 23 47)"/><rect x="20" y="44" width="7" height="6" fill="none" stroke="#3d2a14" stroke-width=".6" stroke-dasharray="1 1" transform="rotate(-12 23 47)"/>
+        <rect x="32" y="55" width="7" height="5" fill="#5b6e3a" transform="rotate(10 35 57)"/><rect x="32" y="55" width="7" height="5" fill="none" stroke="#2a1e12" stroke-width=".6" stroke-dasharray="1 1" transform="rotate(10 35 57)"/>
+        <ellipse cx="36" cy="45" rx="2.2" ry="1.6" fill="#2a1e12"/><ellipse cx="24" cy="60" rx="1.5" ry="1.1" fill="#2a1e12"/>
+        <path d="M18 52 Q30 55.5 42 52" stroke="#c9a46a" stroke-width="1.2" fill="none" stroke-dasharray="2.5 1"/>
+        <circle cx="30" cy="24" r="9.5" fill="#cf9f78"/>
+        <ellipse cx="25" cy="28" rx="2" ry="1.3" fill="#7a5a35" opacity=".55"/><ellipse cx="36" cy="20" rx="1.5" ry="1" fill="#7a5a35" opacity=".5"/>
+        <path d="M20.5 22 l-3 -6 l4.5 2.5 l.5 -7 l4 5 l2 -6.5 l2.5 5.5 l3.5 -5.5 l1.5 6.5 l4.5 -3.5 l-1.5 6.5 l3.5 2 Q30 13 20.5 22Z" fill="#3d2a17"/>
+        <rect x="23" y="15.5" width="13" height="3.2" rx="1" fill="#efe6d0" transform="rotate(-18 29 17)"/><path d="M27.5 16 l1.5 2.5 M29 15.5 l1.5 2.5" stroke="#c94a4a" stroke-width=".7" transform="rotate(-18 29 17)"/>
+        <path d="M23.5 20.5 l4 1.6 M36.5 20.5 l-4 1.6" stroke="#2a1200" stroke-width="1" stroke-linecap="round"/>
+        <circle cx="26" cy="24" r="1.1" fill="#2a1200"/><circle cx="34" cy="24" r="1.1" fill="#2a1200"/>
+        <path d="M34.3 25.8 q1.4 2.6 0 3.8 q-1.4 -1.2 0 -3.8Z" fill="#5fd0ff"><animate attributeName="opacity" values="1;.3;1" dur="1.8s" repeatCount="indefinite"/></path>
+        <path d="M26.5 30.5 q3.5 -2.6 7 0" stroke="#2a1200" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+        ${[[23, 29], [24.5, 31], [36, 29.5], [35, 31.5], [27, 32.5], [33, 32.5], [30, 33]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".45" fill="#3d2a17" opacity=".7"/>`).join("")}
+        <ellipse cx="22" cy="69" rx="4" ry="1.8" fill="#cf9f78"/><ellipse cx="37" cy="69" rx="4" ry="1.8" fill="#cf9f78"/>
+      </g>
+      <g transform="translate(44 58)">
+        <path d="M-5 0 L5 0 L4.5 10 L-4.5 10Z" fill="#9aa7bd" stroke="#5c6880" stroke-width=".7"/><path d="M-2 3 l2 2 l-1.5 2" stroke="#5c6880" stroke-width=".7" fill="none"/>
+        <ellipse cx="0" cy="0" rx="5" ry="1.6" fill="#c9d3e3" stroke="#5c6880" stroke-width=".7"/>
+        <ellipse cx="1.5" cy="-.6" rx="2" ry=".9" fill="#ffd166" stroke="#a87414" stroke-width=".4"/>
+        <circle cx="-6.5" cy="3.5" r="2.2" fill="#cf9f78"/>
+      </g>
+      ${fly(42, 50, 6, 1.4)}${fly(24, 12, 5, 1.9)}`,
+
+    idle: `
+      <path d="M17 36 C15 47 14 58 15 70 L45 70 C46 58 45 47 43 36Z" fill="#6f7fa6"/>
+      <path d="M18 37 C17 18 43 18 42 37 Q30 31 18 37Z" fill="#5a6890"/>
+      <circle cx="30" cy="27" r="8.5" fill="#f2c9a0"/>
+      <circle cx="27" cy="27" r="1.1" fill="#2a1200"/><circle cx="33" cy="27" r="1.1" fill="#2a1200"/>
+      <path d="M28 31 h4" stroke="#2a1200" stroke-width="1" stroke-linecap="round"/>
+      <circle cx="46" cy="12" r="7" fill="#fff"/><path d="M41 17 l-3 4 l6 -2Z" fill="#fff"/>
+      <text x="46" y="16" text-anchor="middle" font-family="Jua,sans-serif" font-size="11" fill="#0a1d4d">?</text>`,
   }[kind];
-  const extra = {
-    king: `<path d="M8 50 L13 26 L31 26 L36 50Z" fill="none" stroke="#ffd166" stroke-width="1.5"/><path d="M22 26v24" stroke="#ffd166" stroke-width="1.5"/><path d="M36 30 l5 -12" stroke="#b8902e" stroke-width="2"/><circle cx="41" cy="17" r="3" fill="#ffd166"/>`,
-    knight: `<path d="M38 22 V46" stroke="#c9d3e3" stroke-width="2.5"/><path d="M34 40 h8" stroke="#7a4e22" stroke-width="2.5"/>`,
-    beggar: `<rect x="14" y="34" width="5" height="5" fill="#a68a5e"/><rect x="25" y="40" width="6" height="4" fill="#5b3a1e"/><path d="M28 44 h14 a7 5 0 0 1 -14 0z" fill="#8a6d3b" stroke="#5b3a1e" stroke-width="1.2"/>`,
-    noble: `<path d="M18 28 l4 5 l4 -5" stroke="#fff" stroke-width="1.5" fill="none"/>`,
-    commoner: "", idle: `<circle cx="36" cy="6" r="6" fill="#fff"/><text x="36" y="9.5" text-anchor="middle" font-family="Jua" font-size="9" fill="#0a1d4d">?</text>`,
-  }[kind];
-  return `<svg viewBox="0 -4 44 56"><ellipse cx="22" cy="51" rx="13" ry="2.5" fill="#000" opacity=".3"/>
-    <path d="M9 50 C9 34 13 26 22 26 C31 26 35 34 35 50Z" fill="${robe}"/>
-    <circle cx="22" cy="16" r="9" fill="#f2c9a0"/>
-    ${`<circle cx="19" cy="16" r="1.2" fill="#2a1200"/><circle cx="25" cy="16" r="1.2" fill="#2a1200"/>
-    <path d="${kind === "beggar" ? "M19 21 q3 -2 6 0" : "M19 20 q3 2.5 6 0"}" stroke="#2a1200" stroke-width="1.2" fill="none" stroke-linecap="round"/>`}
-    ${hat}${extra}</svg>`;
+  return `<svg viewBox="0 -4 60 76"><ellipse cx="30" cy="70.5" rx="17" ry="2.6" fill="#000" opacity=".3"/>${C}</svg>`;
 }
 
 const ladderPrev = {};
@@ -706,7 +813,7 @@ function updateLadder() {
   }
   // measure only now: the box is display:none until it has content
   const top = Math.max(150000, ...list.filter((p) => p.has).map((p) => p.amt * 1.12));
-  const H = box.clientHeight || 340, padTop = 70, padBot = 52;
+  const H = box.clientHeight || 400, padTop = 110, padBot = 52;
   const yOf = (v) => padBot + Math.max(0, Math.min(1, v / top)) * (H - padTop - padBot);
   // shrink characters to fit everyone on one screen; scroll sideways only past ~9 people
   const boxW = box.clientWidth || 320;
