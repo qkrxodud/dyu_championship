@@ -161,7 +161,10 @@ h1{font:400 clamp(46px,12vw,92px)/1.05 var(--jua);color:#fff;margin:14px 0 0;tex
 .ladder .zone{position:absolute;left:0;right:0;pointer-events:none}
 .ladder .slum{bottom:0;background:repeating-linear-gradient(45deg,rgba(138,109,59,.18) 0 6px,rgba(91,58,30,.12) 6px 12px);border-top:2px dashed rgba(255,93,108,.6);transition:height .8s cubic-bezier(.2,.9,.25,1)}
 .ladder .slum span,.ladder .palace span{position:absolute;left:8px;font:400 11px/1 var(--jua);letter-spacing:.08em}
-.ladder .slum span{top:6px;left:auto;right:8px;color:#ff9aa4;opacity:.85}
+.ladder{margin-bottom:8px}
+.ladder-legend{display:flex;align-items:center;gap:8px;font:400 12px/1.4 var(--sans);color:#ff9aa4;margin:0 0 16px}
+.ladder-legend i{width:22px;border-top:2px dashed rgba(255,93,108,.8);flex:none}
+.ladder:empty+.ladder-legend{display:none}
 .ladder .palace{top:0;height:46px;border-bottom:1px solid rgba(255,209,102,.3)}
 .ladder .palace span{bottom:6px;color:var(--gold)}
 .ladder .palace svg{position:absolute;right:8px;bottom:0;width:90px;height:auto;opacity:.5}
@@ -398,6 +401,7 @@ footer svg{width:64px;height:auto;margin-bottom:12px}
         <div class="panel">
           <h4><span class="step" style="background:var(--gold)">4</span>최종 정산<small>5만 원 이하 몰수</small></h4>
           <div class="ladder" id="ladder"></div>
+          <div class="ladder-legend"><i></i>빨간 점선 아래 = 거지촌 (₩50,000 이하 몰수)</div>
           <div class="tbl" id="settleTable"></div>
           <p class="hint">사칙연산으로 계산한 최종 금액을 입력하면 자동으로 순위가 매겨져요. 상금은 고액 순으로 본인 금액만큼 지급하고, 총 30만 원이 소진되면 그 뒤는 남은 한도만큼만 지급돼요.</p>
         </div>
@@ -806,7 +810,7 @@ function updateLadder() {
   if (!plot) {
     box.innerHTML = `<div class="plot">
       <div class="zone palace"><span>👑 왕좌</span><svg viewBox="0 0 90 40"><path d="M0 40V18h8v-6h6v6h8V8h6V0h4v8h6v10h8v-6h6v6h8V10h6v8h8v22Z" fill="#ffd166"/></svg></div>
-      <div class="zone slum"><span>거지촌 · ₩50,000 이하 몰수</span></div>
+      <div class="zone slum"></div>
       <div class="grid" data-v="100000"><b>10만</b></div><div class="grid" data-v="200000"><b>20만</b></div><div class="grid" data-v="300000"><b>30만</b></div>
     </div>`;
     plot = box.querySelector(".plot");
