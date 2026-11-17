@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DYU 챔피언십 안내</title>
+<meta property="og:title" content="DYU 챔피언십 안내">
+<meta property="og:description" content="12:40 청라 홈플러스 마트 앞 식당 집결">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#061233;font-family:'Noto Sans KR',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#ffd166;text-decoration:none}a:hover{color:#fff}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%)}}
+@keyframes popIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes bob{0%,100%{transform:translate(-50%,-100%)}50%{transform:translate(-50%,-125%)}}
+@keyframes ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+@keyframes dash{to{stroke-dashoffset:-32}}
+@keyframes wave{0%,100%{transform:translateX(0)}50%{transform:translateX(-20px)}}
+</style>
+</head>
+<body>
+<div style="min-height:100vh;background:linear-gradient(180deg,#0f2a6b 0%,#0a1d4d 28%,#061233 70%,#040c26 100%);color:#eaf2ff;position:relative;overflow:hidden">
+  <div id="stars"></div>
+  <div style="position:absolute;left:-10%;top:340px;width:45%;height:110px;background:#071a45;border-radius:50% 50% 0 0;opacity:.9;animation:wave 9s ease-in-out infinite"></div>
+  <div style="position:absolute;right:-12%;top:300px;width:55%;height:150px;background:#061538;border-radius:50% 50% 0 0;opacity:.9;animation:wave 11s ease-in-out -4s infinite"></div>
+
+  <div style="position:relative;max-width:720px;margin:0 auto;padding:0 20px">
+
+    <header style="padding:clamp(56px,10vw,96px) 0 24px;text-align:center">
+      <div style="font:400 clamp(13px,2.4vw,16px)/1 'Jua',sans-serif;letter-spacing:.25em;color:#ffd166;animation:up .8s ease both">THE ADVENTURE MAP</div>
+      <h1 style="font:400 clamp(44px,11vw,88px)/1.05 'Jua',sans-serif;color:#fff;margin:14px 0 0;text-shadow:0 4px 0 #1b3b8a,0 0 34px rgba(79,163,255,.8);animation:popIn .9s ease .1s both;text-wrap:balance">DYU 챔피언십</h1>
+      <p style="font:400 clamp(14px,2.6vw,16px)/1.8 'Noto Sans KR',sans-serif;color:#c9d8f5;margin:16px auto 0;max-width:420px;animation:up .9s ease .3s both">당일 늦지 않게 12시 40분 마트 앞 식당으로 집결</p>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px;animation:up .9s ease .45s both">
+        <div style="background:#ffd166;color:#3a2a00;font:400 14px/1 'Jua',sans-serif;padding:11px 16px;border-radius:8px;box-shadow:0 4px 0 #b8902e">집결 12:40</div>
+        <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);font:500 13px/1 'Noto Sans KR',sans-serif;padding:11px 16px;border-radius:8px">청라 홈플러스 · 마트 앞 식당</div>
+      </div>
+      <div style="margin-top:28px;display:inline-flex;align-items:center;gap:8px;font:500 12px/1 'Noto Sans KR',sans-serif;color:#9fb3dd;letter-spacing:.15em;animation:up .9s ease .6s both"><span style="width:8px;height:8px;border-radius:50%;background:#ff8c42;box-shadow:0 0 10px #ff8c42;animation:twinkle 1.4s ease infinite"></span><span id="status"></span></div>
+    </header>
+
+    <section style="padding:24px 0 0">
+      <div style="text-align:center;font:400 clamp(20px,4vw,26px)/1 'Jua',sans-serif;color:#fff;letter-spacing:.1em">TIME TABLE</div>
+      <div style="position:relative;max-width:560px;margin:28px auto 0">
+        <svg id="map-svg" width="100%" style="display:block;overflow:visible">
+          <path id="map-path" fill="none" stroke="#ffd166" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round" opacity=".85" style="animation:dash 2.4s linear infinite"></path>
+        </svg>
+        <div id="map-nodes" style="position:absolute;inset:0"></div>
+      </div>
+    </section>
+
+    <section style="margin:40px 0 0;background:#f4e8c8;color:#3a2a10;border-radius:6px;padding:clamp(22px,4vw,30px) clamp(18px,4vw,28px);transform:rotate(-1deg);box-shadow:0 20px 40px rgba(0,0,0,.5)">
+      <div style="font:400 clamp(18px,3.6vw,22px)/1.3 'Jua',sans-serif;text-align:center;text-wrap:balance">SIDE QUEST · 마트 40분 컷 분업 쇼핑</div>
+      <div id="teams" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:18px"></div>
+    </section>
+
+    <section style="padding:clamp(48px,8vw,72px) 0 0">
+      <div style="font:400 15px/1 'Jua',sans-serif;letter-spacing:.25em;color:#ffd166;text-align:center">FINAL BOSS</div>
+      <div style="font:400 clamp(28px,6vw,38px)/1.2 'Jua',sans-serif;color:#fff;text-align:center;margin:8px 0 24px">사칙연산 럭키드로우 룰</div>
+      <div id="rules" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px;text-align:center"><div style="font:400 11px/1 'Jua',sans-serif;letter-spacing:.2em;color:#9fb3dd">SEED MONEY</div><div style="font:400 26px/1 'Jua',sans-serif;color:#fff;margin-top:8px">₩30,000</div></div>
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px;text-align:center"><div style="font:400 11px/1 'Jua',sans-serif;letter-spacing:.2em;color:#9fb3dd">CUT LINE</div><div style="font:400 26px/1 'Jua',sans-serif;color:#ff8c42;margin-top:8px">≤ ₩50,000</div></div>
+        <div style="background:#ffd166;border-radius:14px;padding:16px;text-align:center;box-shadow:0 5px 0 #b8902e"><div style="font:400 11px/1 'Jua',sans-serif;letter-spacing:.2em;color:#6b5330">MAX PRIZE</div><div style="font:400 26px/1 'Jua',sans-serif;color:#2a1200;margin-top:8px">₩300,000</div></div>
+      </div>
+    </section>
+
+    <footer style="padding:clamp(56px,10vw,88px) 0 60px;text-align:center">
+      <div style="font:400 clamp(22px,5vw,30px)/1.3 'Jua',sans-serif;color:#fff;text-wrap:balance">12:40, 청라 홈플러스 마트 앞 식당에서 만나요</div>
+      <div style="font:400 13px/1.7 'Noto Sans KR',sans-serif;color:#9fb3dd;margin-top:12px">DYU CHAMPIONSHIP · 2026</div>
+    </footer>
+  </div>
+</div>
+
+<script>
+// Pin mode: "auto" follows the current time; "hidden" hides it; "1".."14" pins a step.
+// Override with ?pin=5 or ?pin=hidden in the URL.
+const PIN_MODE = new URLSearchParams(location.search).get("pin") || "auto";
+
+const raw = [
+  ["12:40","13:30","마트 인근 집결 및 점심 식사",0],
+  ["13:30","14:20","대형마트 3개 조 분산 쇼핑 & 계산",0],
+  ["14:20","15:00","숙소 이동",0],
+  ["15:00","15:20","입실, 짐 정리 및 환복",0],
+  ["15:20","16:50","족구 대전 (랜덤 팀전)",1],
+  ["16:50","17:30","샤워 정비 및 숯불 세팅",0],
+  ["17:30","19:15","삼겹살 바비큐 만찬",1],
+  ["19:15","19:30","아레나 세팅 (기본 자본 3만 원 부여!)",0],
+  ["19:30","20:20","Game 1,2",1],
+  ["20:20","20:35","휴식",0],
+  ["20:35","21:25","Game 3,4",1],
+  ["21:25","21:50","사칙연산 정산 타임",1],
+  ["21:50","22:00","마무리",0],
+  ["22:00","","자유 음주 & 야식",0],
+];
+const teams = [
+  { id: "A", name: "정육 / 수산", items: "삼겹살, 목살, 소시지, 새우 등" },
+  { id: "B", name: "주류 / 음료", items: "소주, 맥주, 생수, 탄산, 얼음, 종이컵, 휴지" },
+  { id: "C", name: "채소 / 기타", items: "상추, 마늘, 버섯, 김치, 햇반, 라면, 간식" },
+];
+const rules = [
+  { n: "1", title: "시드머니", lines: ["전원 기본 3만 원 장착 시작"], c: "#7ff5d6" },
+  { n: "2", title: "티켓 획득", lines: ["족구 승리 팀 전원 +1장", "실내 게임(R1~R4) 각 라운드 1등(3장), 2등(2장), 3등(1장)"], c: "#5fd0ff" },
+  { n: "3", title: "추첨 & 연산", lines: ["라운드 종료 즉시 럭키드로우 박스에서 티켓 수만큼 사칙연산 카드 뽑기 (+5, x2, -2 등)", "뽑은 카드는 버릴 수 없고 전부 조합해서 최종 금액 산출", "사칙연산 카드 3장 이상 사용해야 인정"], c: "#a58bff" },
+  { n: "4", title: "룰 (중요!)", lines: ["최종 계산 금액이 5만 원 이하(5만 원 포함)면 상금 0원(전액 몰수)", "최대 상금 총액 30만 원 한도 내 고액 순 차등 지급!"], c: "#ffd166" },
+];
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const n = raw.length, W = 520, step = 104, mapH = step * n;
+const min = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+
+function renderMap() {
+  const now = new Date();
+  const nowM = now.getHours() * 60 + now.getMinutes();
+  let cur = -1;
+  if (PIN_MODE === "auto") { if (nowM >= min("12:40")) raw.forEach(([s], i) => { if (nowM >= min(s)) cur = i; }); }
+  else if (PIN_MODE !== "hidden") cur = Math.min(n - 1, Math.max(0, parseInt(PIN_MODE, 10) - 1 || 0));
+
+  const nodes = raw.map(([s, e, title, hi], i) => {
+    const left = i % 2 === 0, x = left ? 70 : W - 70, y = i * step + 44, isCurrent = i === cur;
+    return {
+      x, y, xp: x / W * 100, yp: y / mapH * 100, title, isCurrent,
+      time: e ? `${s} ~ ${e}` : `${s} ~`,
+      lxp: (left ? x + 44 : 70 - 44) / W * 100, lwp: (W - 140 - 44 - 36) / W * 100, ta: left ? "left" : "right",
+      lvLabel: hi ? "★" : `LV${i + 1}`,
+      islandBg: isCurrent ? "radial-gradient(ellipse at 50% 30%,#ffb067,#ff8c42 70%)" : hi ? "radial-gradient(ellipse at 50% 30%,#ffe9a8,#ffd166 70%)" : "radial-gradient(ellipse at 50% 30%,#2f6bd9,#163d8f 70%)",
+      islandFg: hi || isCurrent ? "#2a1200" : "#fff",
+      timeC: isCurrent ? "#ff8c42" : "#ffd166",
+    };
+  });
+
+  let pathD = `M ${nodes[0].x} ${nodes[0].y}`;
+  for (let i = 1; i < n; i++) { const a = nodes[i - 1], b = nodes[i]; pathD += ` C ${a.x} ${a.y + step / 2}, ${b.x} ${b.y - step / 2}, ${b.x} ${b.y}`; }
+  document.getElementById("map-svg").setAttribute("viewBox", `0 0 ${W} ${mapH}`);
+  document.getElementById("map-path").setAttribute("d", pathD);
+
+  let html = nodes.map((nd, i) => `
+    <div style="position:absolute;left:${nd.xp}%;top:${nd.yp}%;transform:translate(-50%,-50%);animation:pop .6s ease ${i * 110 + 300}ms both">
+      <div style="position:relative;width:clamp(48px,11vw,68px);aspect-ratio:8/5;border-radius:50%;background:${nd.islandBg};box-shadow:0 8px 0 #0b2459,0 0 26px rgba(79,163,255,.5);display:flex;align-items:center;justify-content:center;font:400 clamp(11px,2.4vw,14px)/1 'Jua',sans-serif;color:${nd.islandFg}">${nd.lvLabel}
+        ${nd.isCurrent ? '<div style="position:absolute;inset:0;border-radius:50%;border:2px solid #ff8c42;animation:ring 1.8s ease-out infinite"></div>' : ""}
+      </div>
+    </div>
+    <div style="position:absolute;left:${nd.lxp}%;top:${nd.yp}%;transform:translateY(-50%);width:${nd.lwp}%;text-align:${nd.ta};animation:up .6s ease ${i * 110 + 400}ms both">
+      <div style="font:400 clamp(11px,2.4vw,13px)/1 'Jua',sans-serif;letter-spacing:.06em;color:${nd.timeC}">${nd.time}</div>
+      <div style="font:700 clamp(13px,3vw,16px)/1.4 'Noto Sans KR',sans-serif;color:#fff;margin-top:5px;text-shadow:0 2px 8px rgba(0,0,0,.6);word-break:keep-all">${esc(nd.title)}</div>
+    </div>`).join("");
+
+  if (cur >= 0) {
+    const pin = { xp: nodes[cur].xp, yp: (nodes[cur].y - 26) / mapH * 100 };
+    html += `
+    <div style="position:absolute;left:${pin.xp}%;top:${pin.yp}%;animation:bob 1.6s ease-in-out infinite;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2">
+      <div style="width:28px;height:28px;background:#ff8c42;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 0 20px #ff8c42"></div>
+      <div style="background:#ff8c42;color:#2a1200;font:400 11px/1 'Jua',sans-serif;letter-spacing:.1em;padding:6px 10px;border-radius:6px;white-space:nowrap">YOU ARE HERE</div>
+    </div>`;
+  }
+  document.getElementById("map-nodes").innerHTML = html;
+
+  document.getElementById("status").textContent =
+    cur < 0 ? "NOW LOADING · 12:40 집결 전" : cur === n - 1 ? "FREE TIME · 자유 음주 & 야식" : `NOW PLAYING · ${raw[cur][2]}`;
+  return cur;
+}
+
+// Stars (seeded so they stay put)
+const rnd = (seed) => { let x = seed; return () => (x = (x * 16807) % 2147483647) / 2147483647; };
+const r1 = rnd(42);
+document.getElementById("stars").innerHTML = Array.from({ length: 40 }, () => {
+  const s = { x: Math.round(r1() * 100), y: Math.round(r1() * 900), r: 1 + Math.round(r1() * 2), d: (2 + r1() * 3).toFixed(1), dl: (r1() * 3).toFixed(1) };
+  return `<div style="position:absolute;left:${s.x}%;top:${s.y}px;width:${s.r}px;height:${s.r}px;border-radius:50%;background:#fff;animation:twinkle ${s.d}s ease infinite;animation-delay:${s.dl}s"></div>`;
+}).join("");
+
+document.getElementById("teams").innerHTML = teams.map((tm) => `
+  <div style="border:2px dashed #8a6d3b;border-radius:8px;padding:16px 12px;text-align:center">
+    <div style="font:400 32px/1 'Jua',sans-serif">${tm.id}조</div>
+    <div style="font:700 14px/1.4 'Noto Sans KR',sans-serif;margin:8px 0 4px">${esc(tm.name)}</div>
+    <div style="font:400 12px/1.7 'Noto Sans KR',sans-serif;color:#6b5330">${esc(tm.items)}</div>
+  </div>`).join("");
+
+document.getElementById("rules").innerHTML = rules.map((r) => `
+  <div style="display:grid;grid-template-columns:56px 1fr;gap:14px;background:rgba(255,255,255,.08);border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,.14)">
+    <div style="width:52px;height:52px;border-radius:14px;background:${r.c};box-shadow:0 5px 0 rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font:400 24px/1 'Jua',sans-serif;color:#1a1200">${r.n}</div>
+    <div style="min-width:0"><div style="font:700 15px/1.4 'Noto Sans KR',sans-serif;color:#fff;margin:4px 0 6px">${esc(r.title)}</div>
+      ${r.lines.map((ln) => `<div style="font:400 13px/1.7 'Noto Sans KR',sans-serif;color:#c9d8f5;word-break:keep-all">${esc(ln)}</div>`).join("")}</div>
+  </div>`).join("");
+
+// Re-render only when the current step changes, so entrance animations don't replay every tick
+let lastCur = renderMap();
+setInterval(() => {
+  const now = new Date(), nowM = now.getHours() * 60 + now.getMinutes();
+  let cur = -1;
+  if (PIN_MODE === "auto") { if (nowM >= min("12:40")) raw.forEach(([s], i) => { if (nowM >= min(s)) cur = i; }); }
+  else return;
+  if (cur !== lastCur) lastCur = renderMap();
+}, 30000);
+</script>
+</body>
+</html>
