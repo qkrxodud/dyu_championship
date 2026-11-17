@@ -161,7 +161,7 @@ h1{font:400 clamp(46px,12vw,92px)/1.05 var(--jua);color:#fff;margin:14px 0 0;tex
 .ladder .zone{position:absolute;left:0;right:0;pointer-events:none}
 .ladder .slum{bottom:0;background:repeating-linear-gradient(45deg,rgba(138,109,59,.18) 0 6px,rgba(91,58,30,.12) 6px 12px);border-top:2px dashed rgba(255,93,108,.6);transition:height .8s cubic-bezier(.2,.9,.25,1)}
 .ladder .slum span,.ladder .palace span{position:absolute;left:8px;font:400 11px/1 var(--jua);letter-spacing:.08em}
-.ladder .slum span{bottom:6px;color:#ff9aa4;opacity:.8}
+.ladder .slum span{top:6px;left:auto;right:8px;color:#ff9aa4;opacity:.85}
 .ladder .palace{top:0;height:46px;border-bottom:1px solid rgba(255,209,102,.3)}
 .ladder .palace span{bottom:6px;color:var(--gold)}
 .ladder .palace svg{position:absolute;right:8px;bottom:0;width:90px;height:auto;opacity:.5}
@@ -174,7 +174,7 @@ h1{font:400 clamp(46px,12vw,92px)/1.05 var(--jua);color:#fff;margin:14px 0 0;tex
 .tok .am{font:400 11px/1.2 var(--jua);color:var(--ink-3);white-space:nowrap}
 .tok.king{z-index:3}.tok.king .nm{margin-top:7px}.tok.king .av{transform:scale(1.25);filter:drop-shadow(0 0 12px rgba(255,209,102,.8))}.tok.king .am{color:var(--gold)}
 .tok.beggar .am{color:#ff9aa4}.tok.beggar .av{animation:beg 2.4s ease-in-out infinite}
-.tok.idle{opacity:.45}
+.tok.idle .am{color:var(--ink-3)}
 .tok.climb .av{animation:hop .45s ease 2}
 @keyframes hop{50%{transform:translateY(-8px)}}
 #settleTable{padding-bottom:6px}
@@ -666,7 +666,7 @@ function renderSettle() {
 
 /* ---------- 계급 사다리: everyone climbs by their amount, beggar at the bottom, king on top ---------- */
 function avatar(kind) {
-  const robe = { king: "#c0392b", noble: "#5b6ee1", knight: "#9aa7bd", commoner: "#6b8f5e", beggar: "#7a5a35", idle: "#3a4a75" }[kind];
+  const robe = { king: "#c0392b", noble: "#5b6ee1", knight: "#9aa7bd", commoner: "#6b8f5e", beggar: "#7a5a35", idle: "#7d8fb8" }[kind];
   const hat = {
     king: `<path d="M12 10 L11 1 L16 5 L22 -2 L28 5 L33 1 L32 10Z" fill="#ffd166" stroke="#b8902e" stroke-width="1.2" stroke-linejoin="round"/><circle cx="22" cy="6" r="1.6" fill="#ff5d6c"/>`,
     noble: `<rect x="14" y="-3" width="16" height="11" rx="1.5" fill="#1a1a2e"/><rect x="11" y="7" width="22" height="3" rx="1.5" fill="#1a1a2e"/><rect x="14" y="4" width="16" height="2" fill="#a58bff"/>`,
@@ -680,12 +680,12 @@ function avatar(kind) {
     knight: `<path d="M38 22 V46" stroke="#c9d3e3" stroke-width="2.5"/><path d="M34 40 h8" stroke="#7a4e22" stroke-width="2.5"/>`,
     beggar: `<rect x="14" y="34" width="5" height="5" fill="#a68a5e"/><rect x="25" y="40" width="6" height="4" fill="#5b3a1e"/><path d="M28 44 h14 a7 5 0 0 1 -14 0z" fill="#8a6d3b" stroke="#5b3a1e" stroke-width="1.2"/>`,
     noble: `<path d="M18 28 l4 5 l4 -5" stroke="#fff" stroke-width="1.5" fill="none"/>`,
-    commoner: "", idle: `<text x="22" y="20" text-anchor="middle" font-family="Jua" font-size="10" fill="#9fb3dd">?</text>`,
+    commoner: "", idle: `<circle cx="36" cy="6" r="6" fill="#fff"/><text x="36" y="9.5" text-anchor="middle" font-family="Jua" font-size="9" fill="#0a1d4d">?</text>`,
   }[kind];
   return `<svg viewBox="0 -4 44 56"><ellipse cx="22" cy="51" rx="13" ry="2.5" fill="#000" opacity=".3"/>
     <path d="M9 50 C9 34 13 26 22 26 C31 26 35 34 35 50Z" fill="${robe}"/>
-    <circle cx="22" cy="16" r="9" fill="${kind === "idle" ? "#5a6a95" : "#f2c9a0"}"/>
-    ${kind === "idle" ? "" : `<circle cx="19" cy="16" r="1.2" fill="#2a1200"/><circle cx="25" cy="16" r="1.2" fill="#2a1200"/>
+    <circle cx="22" cy="16" r="9" fill="#f2c9a0"/>
+    ${`<circle cx="19" cy="16" r="1.2" fill="#2a1200"/><circle cx="25" cy="16" r="1.2" fill="#2a1200"/>
     <path d="${kind === "beggar" ? "M19 21 q3 -2 6 0" : "M19 20 q3 2.5 6 0"}" stroke="#2a1200" stroke-width="1.2" fill="none" stroke-linecap="round"/>`}
     ${hat}${extra}</svg>`;
 }
@@ -695,13 +695,6 @@ function updateLadder() {
   const box = $("ladder");
   if (!S.players.length) { box.innerHTML = ""; return; }
   const list = withPrizes(settleList());
-  const top = Math.max(150000, ...list.filter((p) => p.has).map((p) => p.amt * 1.12));
-  const H = box.clientHeight || 340, padTop = 70, padBot = 52;
-  const yOf = (v) => padBot + Math.max(0, Math.min(1, v / top)) * (H - padTop - padBot);
-  // shrink characters to fit everyone on one screen; scroll sideways only past ~9 people
-  const n = S.players.length, colW = Math.max(36, Math.min(60, (box.clientWidth - 16) / n)), width = Math.max(box.clientWidth, n * colW + 16);
-  box.style.setProperty("--col", colW + "px");
-
   let plot = box.querySelector(".plot");
   if (!plot) {
     box.innerHTML = `<div class="plot">
@@ -711,6 +704,14 @@ function updateLadder() {
     </div>`;
     plot = box.querySelector(".plot");
   }
+  // measure only now: the box is display:none until it has content
+  const top = Math.max(150000, ...list.filter((p) => p.has).map((p) => p.amt * 1.12));
+  const H = box.clientHeight || 340, padTop = 70, padBot = 52;
+  const yOf = (v) => padBot + Math.max(0, Math.min(1, v / top)) * (H - padTop - padBot);
+  // shrink characters to fit everyone on one screen; scroll sideways only past ~9 people
+  const boxW = box.clientWidth || 320;
+  const n = S.players.length, colW = Math.max(36, Math.min(60, (boxW - 16) / n)), width = Math.max(boxW, n * colW + 16);
+  box.style.setProperty("--col", colW + "px");
   plot.style.width = width + "px";
   plot.querySelector(".slum").style.height = yOf(CUT) + "px";
   plot.querySelectorAll(".grid").forEach((g) => { const v = +g.dataset.v; g.style.bottom = yOf(v) + "px"; g.style.display = v < top ? "" : "none"; });
@@ -830,6 +831,7 @@ const io = new IntersectionObserver((ents) => ents.forEach((en) => {
 }), { rootMargin: "-45% 0px -50% 0px" });
 ["timetable", "shopping", "rules", "score"].forEach((id) => io.observe($(id)));
 
+window.addEventListener("resize", () => updateLadder());
 renderPlayers();
 // Re-render the map only when the current step changes, so entrance animations don't replay every tick
 let lastCur = renderMap();
